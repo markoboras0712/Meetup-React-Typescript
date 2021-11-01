@@ -1,3 +1,5 @@
+import MeetupList from "../components/meetups/MeetupList";
+
 const DUMMY_DATA: {
   id: string;
   title: string;
@@ -28,11 +30,8 @@ const DUMMY_DATA: {
 const AllMeetups: React.FC = () => {
   return (
     <section>
-      <ul>
-        {DUMMY_DATA.map((meetup) => {
-          return <li key={meetup.id}>{meetup.title}</li>;
-        })}
-      </ul>
+      <h1>All Meetups</h1>
+      <MeetupList meetups={DUMMY_DATA}></MeetupList>
     </section>
   );
 };
