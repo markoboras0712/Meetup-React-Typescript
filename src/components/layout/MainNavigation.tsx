@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 
+import classes from './MainNavigation.module.css';
+
 const MainNavigation: React.FC = () => {
   return (
-    <header>
-      <div>React+Typescript Meetups</div>
+    <header className={classes.header}>
+      <div className={classes.logo}>React+Typescript Meetups</div>
       <nav>
         <ul>
           <li>
