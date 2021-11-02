@@ -1,4 +1,6 @@
 import NewMeetupForm from '../components/meetups/NewMeetupForm';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 interface Meetup {
   title: string;
   image: string;
@@ -6,8 +8,16 @@ interface Meetup {
   description: string;
 }
 const NewMeetup: React.FC = () => {
+  const history = useHistory();
   const addMeetupHandler = (meetupData: Meetup) => {
-    console.log(meetupData);
+    axios
+      .post(
+        'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
+        meetupData,
+      )
+      .then(() => {
+        history.replace('/');
+      });
   };
   return (
     <section>
