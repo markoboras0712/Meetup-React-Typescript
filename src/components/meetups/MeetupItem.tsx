@@ -1,15 +1,14 @@
 import classes from './MeetupItem.module.css';
-import {Card} from 'components'
+import { Card } from 'components';
+import { Meetup } from 'models/meetup';
 
-interface Props {
-  id: string;
-  title: string;
-  image: string;
-  address: string;
-  description: string;
-}
-
- export const MeetupItem: React.FC<Props> = ({id,title,image,address,description}) => {
+export const MeetupItem: React.FC<Meetup> = ({
+  id,
+  title,
+  image,
+  address,
+  description,
+}) => {
   return (
     <li className={classes.item}>
       <Card>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-
+import {paths} from 'App'
 import classes from './MainNavigation.module.css';
 
 export const MainNavigation: React.FC = () => {
@@ -9,13 +9,13 @@ export const MainNavigation: React.FC = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">All Meetups</Link>
+            <Link to={paths.home}>All Meetups</Link>
           </li>
           <li>
-            <Link to="/favorites">Favorite Meetups</Link>
+            <Link to={paths.favorites}>Favorite Meetups</Link>
           </li>
           <li>
-            <Link to="/new-meetup">Create New Meetup</Link>
+            <Link to={paths.newMeetup}>Create New Meetup</Link>
           </li>
         </ul>
       </nav>

@@ -1,42 +1,41 @@
 import classes from './NewMeetupForm.module.css';
-import {Card} from 'components';
+import { Card } from 'components';
 import { useRef } from 'react';
+import { Meetup } from 'models/meetup';
 
-interface Meetup {
-  title: string;
-  image: string;
-  address: string;
-  description: string;
-}
-
-interface Props{
+interface Props {
   onAddMeetup: (meetup: Meetup) => void;
 }
 
-export const NewMeetupForm: React.FC<Props> = ({onAddMeetup}) => {
+export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    const enteredTitle = titleInputRef.current!.value; // ! znamo da vrijednost nikada nece biti null
-    const enteredImage = imageInputRef.current!.value;
-    const enteredAddress = addressInputRef.current!.value;
-    const enteredDescription = descriptionInputRef.current!.value;
+    const enteredTitle = titleInputRef.current?.value;
+    const enteredImage = imageInputRef.current?.value;
+    const enteredAddress = addressInputRef.current?.value;
+    const enteredDescription = descriptionInputRef.current?.value;
+    if (
+      enteredTitle?.trim().length === 0 ||
+      enteredImage?.trim().length === 0 ||
+      enteredAddress?.trim().length === 0 ||
+      enteredDescription?.trim().length === 0
+    ) {
+      return;
+    }
 
-    const meetupData: {
-      title: string;
-      image: string;
-      address: string;
-      description: string;
-    } = {
+    const meetupData: Meetup = {
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
       description: enteredDescription,
+      id: new Date().toISOString(),
     };
     onAddMeetup(meetupData);
+    console.log(meetupData);
   };
   return (
     <Card>
@@ -69,4 +68,3 @@ export const NewMeetupForm: React.FC<Props> = ({onAddMeetup}) => {
     </Card>
   );
 };
-

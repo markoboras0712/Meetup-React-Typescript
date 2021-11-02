@@ -1,16 +1,9 @@
 import classes from './MeetupList.module.css';
-import {MeetupItem} from 'components'
-
-interface Meetups {
-  id: string;
-  title: string;
-  image: string;
-  address: string;
-  description: string;
-}
+import { MeetupItem } from 'components';
+import { Meetup } from 'models/meetup';
 
 interface Props {
-  meetups: Meetups[];
+  meetups: Meetup[];
 }
 
 export const MeetupList: React.FC<Props> = ({ meetups }) => {
@@ -29,4 +22,3 @@ export const MeetupList: React.FC<Props> = ({ meetups }) => {
     </ul>
   );
 };
-

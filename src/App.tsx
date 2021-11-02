@@ -1,9 +1,8 @@
 import { Route, Switch } from 'react-router-dom';
-import {AllMeetups,Favorites,NewMeetup,NotFound} from 'pages';
-import {Layout} from 'components';
+import { AllMeetups, Favorites, NewMeetup, NotFound } from 'pages';
+import { Layout } from 'components';
 
-
-enum paths {
+export enum paths {
   home = '/',
   favorites = '/favorites',
   newMeetup = '/new-meetup',

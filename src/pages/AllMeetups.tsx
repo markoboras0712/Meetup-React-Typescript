@@ -1,14 +1,7 @@
-import {MeetupList} from 'components';
+import { MeetupList } from 'components';
+import { Meetup } from '../models/meetup';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-
-interface Meetup {
-  id: string;
-  title: string;
-  image: string;
-  address: string;
-  description: string;
-}
 
 export const AllMeetups: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -17,28 +10,27 @@ export const AllMeetups: React.FC = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-    .get(
-      'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
-    )
-    .then((response) => {
-      const meetups = [];
-      for(const key in response.data){
-        const meetup: Meetup = {
-          id: key,
-          ...response.data[key]
-        };
-        meetups.push(meetup);
-      }
-      setIsLoading(false);
-      setLoadedMeetups(meetups);
-      console.log(response.data);
-    }).catch((error) => {
-      console.log(error);
-    });
-
+      .get(
+        'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
+      )
+      .then((response) => {
+        console.log(response.data);
+        const meetups = [];
+        for (const key in response.data) {
+          const meetup: Meetup = {
+            id: key,
+            ...response.data[key],
+          };
+          meetups.push(meetup);
+        }
+        setIsLoading(false);
+        setLoadedMeetups(meetups);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
-  
   if (isLoading) {
     return (
       <section>
@@ -53,4 +45,3 @@ export const AllMeetups: React.FC = () => {
     </section>
   );
 };
-
