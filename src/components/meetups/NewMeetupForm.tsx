@@ -3,7 +3,18 @@ import Card from '../UI/Card';
 import { useRef } from 'react';
 import React from 'react';
 
-const NewMeetupForm: React.FC = () => {
+interface Meetup {
+  title: string;
+  image: string;
+  address: string;
+  description: string;
+}
+
+interface FuncProps{
+  onAddMeetup: (meetup: Meetup) => void;
+}
+
+const NewMeetupForm: React.FC<FuncProps> = (props) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +37,7 @@ const NewMeetupForm: React.FC = () => {
       address: enteredAddress,
       description: enteredDescription,
     };
-    console.log(meetupData);
+    props.onAddMeetup(meetupData);
   };
   return (
     <Card>
