@@ -1,7 +1,7 @@
 import classes from './MeetupItem.module.css';
-import Card from '../UI/Card';
+import {Card} from '../UI/Card'
 
-interface FuncProps {
+interface Props {
   id: string;
   title: string;
   image: string;
@@ -9,17 +9,17 @@ interface FuncProps {
   description: string;
 }
 
-const MeetupItem: React.FC<FuncProps> = (props) => {
+ export const MeetupItem: React.FC<Props> = ({id,title,image,address,description}) => {
   return (
     <li className={classes.item}>
       <Card>
         <div className={classes.image}>
-          <img src={props.image} alt={props.description}></img>
+          <img src={image} alt={description}></img>
         </div>
         <div className={classes.content}>
-          <h3>{props.title}</h3>
-          <address>{props.address}</address>
-          <p>{props.description}</p>
+          <h3>{title}</h3>
+          <address>{address}</address>
+          <p>{description}</p>
         </div>
         <div className={classes.actions}>
           <button>To favorites</button>
@@ -28,5 +28,3 @@ const MeetupItem: React.FC<FuncProps> = (props) => {
     </li>
   );
 };
-
-export default MeetupItem;

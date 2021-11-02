@@ -1,5 +1,5 @@
 import classes from './NewMeetupForm.module.css';
-import Card from '../UI/Card';
+import {Card} from '../UI/Card';
 import { useRef } from 'react';
 import React from 'react';
 
@@ -10,11 +10,11 @@ interface Meetup {
   description: string;
 }
 
-interface FuncProps{
+interface Props{
   onAddMeetup: (meetup: Meetup) => void;
 }
 
-const NewMeetupForm: React.FC<FuncProps> = (props) => {
+export const NewMeetupForm: React.FC<Props> = ({onAddMeetup}) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +37,7 @@ const NewMeetupForm: React.FC<FuncProps> = (props) => {
       address: enteredAddress,
       description: enteredDescription,
     };
-    props.onAddMeetup(meetupData);
+    onAddMeetup(meetupData);
   };
   return (
     <Card>
@@ -71,4 +71,3 @@ const NewMeetupForm: React.FC<FuncProps> = (props) => {
   );
 };
 
-export default NewMeetupForm;

@@ -1,22 +1,19 @@
-class Meetup {
+export interface Meetup {
   id: string;
   title: string;
   image: string;
   address: string;
   description: string;
+}
 
-  constructor(
-    meetupTitle: string,
-    meetupImage: string,
-    meetupAddress: string,
-    meetupDescription: string,
-  ) {
-    this.title = meetupTitle;
-    this.image = meetupImage;
-    this.address = meetupAddress;
-    this.description = meetupDescription;
-    this.id = new Date().toISOString();
+export class Meetup {
+  constructor(Meetup : Meetup) {
+      this.id = Meetup.id;
+      this.title = Meetup.title;
+      this.image = Meetup.image;
+      this.address= Meetup.address;
+      this.description = Meetup.description;
   }
 }
 
-export default Meetup;
+

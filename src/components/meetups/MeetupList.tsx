@@ -1,5 +1,5 @@
 import classes from './MeetupList.module.css';
-import MeetupItem from './MeetupItem';
+import {MeetupItem} from './MeetupItem'
 
 interface Meetups {
   id: string;
@@ -9,27 +9,24 @@ interface Meetups {
   description: string;
 }
 
-interface FuncProps {
+interface Props {
   meetups: Meetups[];
 }
 
-const MeetupList: React.FC<FuncProps> = (props) => {
+export const MeetupList: React.FC<Props> = ({ meetups }) => {
   return (
     <ul className={classes.list}>
-      {props.meetups.map((meetup) => {
-        return (
-          <MeetupItem
-            key={meetup.id}
-            id={meetup.id}
-            image={meetup.image}
-            title={meetup.title}
-            address={meetup.address}
-            description={meetup.description}
-          ></MeetupItem>
-        );
-      })}
+      {meetups.map((meetup) => (
+        <MeetupItem
+          key={meetup.id}
+          id={meetup.id}
+          image={meetup.image}
+          title={meetup.title}
+          address={meetup.address}
+          description={meetup.description}
+        ></MeetupItem>
+      ))}
     </ul>
   );
 };
 
-export default MeetupList;

@@ -1,4 +1,4 @@
-import MeetupList from '../components/meetups/MeetupList';
+import {MeetupList} from '../components/meetups/MeetupList';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
@@ -10,7 +10,7 @@ interface Meetup {
   description: string;
 }
 
-const AllMeetups: React.FC = () => {
+export const AllMeetups: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [loadedMeetups, setLoadedMeetups] = useState<Meetup[]>([]);
 
@@ -32,6 +32,8 @@ const AllMeetups: React.FC = () => {
       setIsLoading(false);
       setLoadedMeetups(meetups);
       console.log(response.data);
+    }).catch((error) => {
+      console.log(error);
     });
 
   }, []);
@@ -52,4 +54,3 @@ const AllMeetups: React.FC = () => {
   );
 };
 
-export default AllMeetups;

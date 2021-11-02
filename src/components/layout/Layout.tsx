@@ -1,13 +1,12 @@
 import classes from './Layout.module.css';
-import MainNavigation from './MainNavigation';
+import {MainNavigation} from './MainNavigation';
 
-const Layout: React.FC = (props) => {
+export const Layout: React.FC = ({children}) => {
   return (
     <div>
       <MainNavigation />
-      <main className={classes.main}>{props.children}</main>
+      <main className={classes.main}>{children}</main>
     </div>
   );
 };
 
-export default Layout;

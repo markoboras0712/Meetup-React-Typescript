@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import classes from './MainNavigation.module.css';
 
-const MainNavigation: React.FC = () => {
+export const MainNavigation: React.FC = () => {
   return (
     <header className={classes.header}>
       <div className={classes.logo}>React+Typescript Meetups</div>
@@ -23,4 +23,4 @@ const MainNavigation: React.FC = () => {
   );
 };
 
-export default MainNavigation;
+

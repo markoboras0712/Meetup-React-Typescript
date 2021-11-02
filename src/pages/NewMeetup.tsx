@@ -1,4 +1,4 @@
-import NewMeetupForm from '../components/meetups/NewMeetupForm';
+import {NewMeetupForm} from '../components/meetups/NewMeetupForm';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 interface Meetup {
@@ -7,7 +7,7 @@ interface Meetup {
   address: string;
   description: string;
 }
-const NewMeetup: React.FC = () => {
+export const NewMeetup: React.FC = () => {
   const history = useHistory();
   const addMeetupHandler = (meetupData: Meetup) => {
     axios
@@ -16,7 +16,7 @@ const NewMeetup: React.FC = () => {
         meetupData,
       )
       .then(() => {
-        history.replace('/');
+        history.push('/');
       });
   };
   return (
@@ -27,4 +27,3 @@ const NewMeetup: React.FC = () => {
   );
 };
 
-export default NewMeetup;
