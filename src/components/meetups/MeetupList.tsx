@@ -1,5 +1,5 @@
 import classes from './MeetupList.module.css';
-import {MeetupItem} from './MeetupItem'
+import {MeetupItem} from 'components'
 
 interface Meetups {
   id: string;

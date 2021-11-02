@@ -1,7 +1,6 @@
 import classes from './NewMeetupForm.module.css';
-import {Card} from '../UI/Card';
+import {Card} from 'components';
 import { useRef } from 'react';
-import React from 'react';
 
 interface Meetup {
   title: string;

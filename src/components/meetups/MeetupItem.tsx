@@ -1,5 +1,5 @@
 import classes from './MeetupItem.module.css';
-import {Card} from '../UI/Card'
+import {Card} from 'components'
 
 interface Props {
   id: string;

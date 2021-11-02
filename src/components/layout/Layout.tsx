@@ -1,5 +1,5 @@
 import classes from './Layout.module.css';
-import {MainNavigation} from './MainNavigation';
+import {MainNavigation} from 'components';
 
 export const Layout: React.FC = ({children}) => {
   return (

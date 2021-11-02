@@ -1,4 +1,4 @@
-import {MeetupList} from '../components/meetups/MeetupList';
+import {MeetupList} from 'components';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
