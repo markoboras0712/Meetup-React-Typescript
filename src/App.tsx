@@ -1,8 +1,6 @@
 import { Route, Switch } from 'react-router-dom';
-import {
-  AllMeetups, FavoriteMeetups, NewMeetup, NotFound,
-}
-   from 'pages';
+import { AllMeetups, FavoriteMeetups, NotFound } from 'pages';
+import { NewMeetupForm } from 'components';
 import { Layout } from 'components';
 
 export enum Paths {
@@ -22,7 +20,7 @@ export const App: React.FC = () => (
         <FavoriteMeetups />
       </Route>
       <Route path={Paths.NewMeetupPage} exact>
-        <NewMeetup />
+        <NewMeetupForm />
       </Route>
       <Route path={Paths.NotFoundPage}>
         <NotFound />

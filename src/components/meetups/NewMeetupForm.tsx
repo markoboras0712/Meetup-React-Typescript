@@ -1,17 +1,18 @@
 import { Card } from 'components';
-import { useRef } from 'react';
 import { Meetup } from 'models/meetup';
+import { MeetupsContext } from 'store/AllMeetupsContext';
+import { useContext, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import classes from './NewMeetupForm.module.css';
 
-interface Props {
-  onAddMeetup: (meetup: Meetup) => void;
-}
-
-export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
+export const NewMeetupForm: React.FC = () => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
+  const history = useHistory();
+  const meetupsCtx = useContext(MeetupsContext);
+
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredTitle = titleInputRef.current?.value;
@@ -34,7 +35,9 @@ export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
       address: enteredAddress,
       description: enteredDescription,
     };
-    onAddMeetup(meetupData);
+    console.log(meetupData);
+    meetupsCtx.addMeetup(meetupData);
+    history.replace('/');
   };
   return (
     <Card>

@@ -21,6 +21,8 @@
     "no-use-before-define": "off",
     "no-restricted-syntax": "off",
     "implicit-arrow-linebreak": 0,
+    "consistent-return": 0,
+    "import/no-duplicates" : 0,
     "function-paren-newline": 0,
     "arrow-body-style": 0,
     "@typescript-eslint/no-empty-function": "off",
