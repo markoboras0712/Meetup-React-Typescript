@@ -20,7 +20,11 @@
   "rules": {
     "no-use-before-define": "off",
     "no-restricted-syntax": "off",
-    "no-console" : "off",
+    "implicit-arrow-linebreak": 0,
+    "function-paren-newline": 0,
+    "arrow-body-style": 0,
+    "@typescript-eslint/no-empty-function": "off",
+    "no-console": "off",
     "indent": "off",
     "jsx-a11y/label-has-associated-control": [
       "error",

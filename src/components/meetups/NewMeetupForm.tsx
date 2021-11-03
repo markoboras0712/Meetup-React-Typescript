@@ -28,6 +28,7 @@ export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
     }
 
     const meetupData: Meetup = {
+      id: new Date().toISOString(),
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,

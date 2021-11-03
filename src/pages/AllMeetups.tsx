@@ -15,7 +15,9 @@ export const AllMeetups: React.FC = () => {
       )
       .then((response) => {
         const meetups: Meetup[] = [];
-        Object.keys(response.data).map((key) => meetups.push({ id: key, ...response.data[key] }));
+        Object.keys(response.data).map((key) =>
+          meetups.push({ ...response.data[key], id: key }),
+        );
         setIsLoading(false);
         setLoadedMeetups(meetups);
       })

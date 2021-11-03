@@ -6,7 +6,7 @@ type FavoritesContextObj = {
   totalFavorites: number;
   addFavorite: (favoriteMeetup: Meetup) => void;
   removeFavorite: (meetupId: string) => void;
-  itemIsFavorite: (meetupId: string) => void;
+  itemIsFavorite: (meetupId: string) => boolean | undefined;
 };
 
 export const FavoritesContext = createContext<FavoritesContextObj>({
@@ -14,22 +14,22 @@ export const FavoritesContext = createContext<FavoritesContextObj>({
   totalFavorites: 0,
   addFavorite: (favoriteMeetup: Meetup) => {},
   removeFavorite: (meetupId: string) => {},
-  itemIsFavorite: (meetupId: string) => {},
+  itemIsFavorite: (meetupId: string) => false,
 });
 
 export const FavoritesContextProvider: React.FC = ({ children }) => {
   const [userFavorites, setUserFavorites] = useState<Meetup[]>([]);
 
   const addFavoriteHandler = (favoriteMeetup: Meetup) => {
-    setUserFavorites((prevUserFavorites) => {
-      return prevUserFavorites.concat(favoriteMeetup);
-    });
-  };
+    setUserFavorites((prevUserFavorites) =>
+      prevUserFavorites.concat(favoriteMeetup),
+    )
+};
 
   const removeFavoriteHandler = (meetupId: string) => {
-    setUserFavorites((prevUserFavorites) => {
-      return prevUserFavorites.filter((meetup) => meetup.id !== meetupId);
-    });
+    setUserFavorites((prevUserFavorites) =>
+      prevUserFavorites.filter((meetup) => meetup.id !== meetupId),
+    );
   };
 
   const itemIsFavoriteHandler = (meetupId: string) => {

@@ -1,12 +1,12 @@
 export interface Meetup {
-  id?: string;
+  id: string;
   title?: string;
   image?: string;
   address?: string;
   description?: string;
 }
 
-export class Meetup{
+export class Meetup {
   constructor(Meetup: Meetup) {
     this.id = Meetup.id;
     this.title = Meetup.title;
