@@ -1,6 +1,3 @@
 import classes from './Card.module.css';
 
-export const Card: React.FC = ({children}) => {
-  return <div className={classes.card}>{children}</div>;
-};
-
+export const Card: React.FC = ({ children }) => <div className={classes.card}>{children}</div>

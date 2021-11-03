@@ -1,7 +1,7 @@
-import classes from './NewMeetupForm.module.css';
 import { Card } from 'components';
 import { useRef } from 'react';
 import { Meetup } from 'models/meetup';
+import classes from './NewMeetupForm.module.css';
 
 interface Props {
   onAddMeetup: (meetup: Meetup) => void;
@@ -19,10 +19,10 @@ export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
     const enteredAddress = addressInputRef.current?.value;
     const enteredDescription = descriptionInputRef.current?.value;
     if (
-      enteredTitle?.trim().length === 0 ||
-      enteredImage?.trim().length === 0 ||
-      enteredAddress?.trim().length === 0 ||
-      enteredDescription?.trim().length === 0
+      enteredTitle?.trim().length === 0
+      || enteredImage?.trim().length === 0
+      || enteredAddress?.trim().length === 0
+      || enteredDescription?.trim().length === 0
     ) {
       return;
     }
@@ -32,10 +32,8 @@ export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
       image: enteredImage,
       address: enteredAddress,
       description: enteredDescription,
-      id: new Date().toISOString(),
     };
     onAddMeetup(meetupData);
-    console.log(meetupData);
   };
   return (
     <Card>
@@ -59,10 +57,10 @@ export const NewMeetupForm: React.FC<Props> = ({ onAddMeetup }) => {
             required
             rows={5}
             ref={descriptionInputRef}
-          ></textarea>
+          />
         </div>
         <div className={classes.actions}>
-          <button>Add Meetup</button>
+          <button type="submit">Add Meetup</button>
         </div>
       </form>
     </Card>

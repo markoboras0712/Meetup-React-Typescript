@@ -1,4 +1,4 @@
 export * from './AllMeetups'
-export * from './Favorites'
+export * from './FavoriteMeetups'
 export * from './NewMeetup'
 export * from './NotFound'

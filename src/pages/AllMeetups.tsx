@@ -1,7 +1,7 @@
 import { MeetupList } from 'components';
-import { Meetup } from '../models/meetup';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Meetup } from '../models/meetup';
 
 export const AllMeetups: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -14,15 +14,8 @@ export const AllMeetups: React.FC = () => {
         'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
       )
       .then((response) => {
-        console.log(response.data);
-        const meetups = [];
-        for (const key in response.data) {
-          const meetup: Meetup = {
-            id: key,
-            ...response.data[key],
-          };
-          meetups.push(meetup);
-        }
+        const meetups: Meetup[] = [];
+        Object.keys(response.data).map((key) => meetups.push({ id: key, ...response.data[key] }));
         setIsLoading(false);
         setLoadedMeetups(meetups);
       })
@@ -41,7 +34,7 @@ export const AllMeetups: React.FC = () => {
   return (
     <section>
       <h1>All Meetups</h1>
-      <MeetupList meetups={loadedMeetups}></MeetupList>
+      <MeetupList meetups={loadedMeetups} />
     </section>
   );
 };

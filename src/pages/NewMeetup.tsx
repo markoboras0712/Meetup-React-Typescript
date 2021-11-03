@@ -1,7 +1,7 @@
-import {NewMeetupForm} from 'components';
-import axios from 'axios';
-import {Meetup} from '../models/meetup'
 import { useHistory } from 'react-router-dom';
+import { NewMeetupForm } from 'components';
+import axios from 'axios';
+import { Meetup } from '../models/meetup'
 
 export const NewMeetup: React.FC = () => {
   const history = useHistory();
@@ -18,8 +18,7 @@ export const NewMeetup: React.FC = () => {
   return (
     <section>
       <h1>Add new Meetup</h1>
-      <NewMeetupForm onAddMeetup={addMeetupHandler}></NewMeetupForm>
+      <NewMeetupForm onAddMeetup={addMeetupHandler} />
     </section>
   );
 };
-
