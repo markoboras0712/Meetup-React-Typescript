@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Meetup {
+export interface Meetup {
   id: string;
   title: string;
   image: string;
@@ -9,11 +9,11 @@ interface Meetup {
   description: string;
 }
 
-interface MeetupSliceState {
+export interface MeetupSliceState {
   meetups: Meetup[];
 }
 
-const initialState: MeetupSliceState = {
+export const initialState: MeetupSliceState = {
   meetups: [],
 };
 
@@ -27,4 +27,4 @@ export const meetupsSlice = createSlice({
   },
 });
 
-export const { replaceMeetups } = meetupsSlice.actions;
+export const meetupActions = meetupsSlice.actions;

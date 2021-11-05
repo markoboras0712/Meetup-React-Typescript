@@ -1,18 +1,15 @@
 import { MeetupList } from 'components';
 import { MeetupsContext } from 'store/AllMeetupsContext';
-import { useContext } from 'react';
-import { Meetup } from 'models/meetup';
+import { useContext, useEffect } from 'react';
 
 export const AllMeetups: React.FC = () => {
   const meetupsCtx = useContext(MeetupsContext);
   meetupsCtx.getMeetups();
   let content;
   if (meetupsCtx.meetups.length === 0) {
-    content = (
-      <p>You dont have any meetups yet</p>
-    )
+    content = <p>You dont have any meetups yet</p>;
   } else {
-    content = <MeetupList meetups={meetupsCtx.meetups} />
+    content = <MeetupList meetups={meetupsCtx.meetups} />;
   }
   return (
     <section>
