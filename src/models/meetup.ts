@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 export interface Meetup {
   id: string;
   title?: string;
