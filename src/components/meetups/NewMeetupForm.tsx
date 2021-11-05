@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import { Card } from 'components';
 import { Meetup } from 'models/meetup';
 import { MeetupsContext } from 'store/AllMeetupsContext';
