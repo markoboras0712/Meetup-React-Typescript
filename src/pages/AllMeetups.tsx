@@ -1,6 +1,5 @@
 import { MeetupList } from 'components';
-import { MeetupsContext } from 'store/AllMeetupsContext';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMeetups } from 'store/features/meetup/allMeetupSlice';
 import { RootState } from 'store/store';

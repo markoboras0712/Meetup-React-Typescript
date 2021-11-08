@@ -1,19 +1,19 @@
 /* eslint-disable import/no-unresolved */
 import { Card } from 'components';
+import { useDispatch } from 'react-redux';
 import { Meetup } from 'models/meetup';
-import { MeetupsContext } from 'store/AllMeetupsContext';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
+import { postMeetup } from 'store/features/meetup/allMeetupSlice';
 import classes from './NewMeetupForm.module.css';
 
 export const NewMeetupForm: React.FC = () => {
+  const dispatch = useDispatch();
   const titleInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
   const history = useHistory();
-  const meetupsCtx = useContext(MeetupsContext);
-
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredTitle = titleInputRef.current?.value;
@@ -31,13 +31,13 @@ export const NewMeetupForm: React.FC = () => {
 
     const meetupData: Meetup = {
       id: new Date().toISOString(),
-      title: enteredTitle,
-      image: enteredImage,
-      address: enteredAddress,
-      description: enteredDescription,
+      title: enteredTitle as string,
+      image: enteredImage as string,
+      address: enteredAddress as string,
+      description: enteredDescription as string,
     };
     console.log(meetupData);
-    meetupsCtx.addMeetup(meetupData);
+    dispatch(postMeetup(meetupData));
     history.replace('/');
   };
   return (
