@@ -1,22 +1,21 @@
 import { MeetupList } from 'components';
 import { MeetupsContext } from 'store/AllMeetupsContext';
 import { useContext, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../store/store';
-import { fetchMeetups } from '../store/features/meetup/meetupActions';
-import { selectStatus } from '../store/features/meetup/meetupSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMeetups } from 'store/features/meetup/allMeetupSlice';
+import { RootState } from 'store/store';
 
 export const AllMeetups: React.FC = () => {
   const dispatch = useDispatch();
-  const status = useTypedSelector(selectStatus);
-  dispatch(fetchMeetups());
-  const meetupsCtx = useContext(MeetupsContext);
-  meetupsCtx.getMeetups();
+  useEffect(() => {
+    dispatch(fetchMeetups());
+  }, []);
+  const meetups = useSelector((state: RootState) => state.meetups);
   let content;
-  if (meetupsCtx.meetups.length === 0) {
+  if (meetups.allMeetups?.length === 0) {
     content = <p>You dont have any meetups yet</p>;
   } else {
-    content = <MeetupList meetups={meetupsCtx.meetups} />;
+    content = <MeetupList meetups={meetups.allMeetups} />;
   }
   return (
     <section>

@@ -1,16 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { meetupsSlice } from 'store/features/meetup/meetupSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import allMeetupReducer from './features/meetup/allMeetupSlice';
 
 export const store = configureStore({
-  reducer: { meetups: meetupsSlice.reducer },
+  reducer: { meetups: allMeetupReducer },
 });
-export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+
+export const rootReducer = combineReducers({
+  meetups: allMeetupReducer,
+});
+export type RootState = ReturnType<typeof rootReducer>;
