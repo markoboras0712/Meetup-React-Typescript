@@ -10,6 +10,7 @@ export const MeetupItem: React.FC<Meetup> = ({
   image,
   address,
   description,
+  isFavorite,
 }) => {
   const favoriteCtx = useContext(FavoritesContext);
   const itemIsFavorite = favoriteCtx.itemIsFavorite(id);
@@ -23,6 +24,7 @@ export const MeetupItem: React.FC<Meetup> = ({
         image,
         address,
         description,
+        isFavorite,
       });
     }
   };

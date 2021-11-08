@@ -6,10 +6,10 @@ import { RootState } from 'store/store';
 
 export const AllMeetups: React.FC = () => {
   const dispatch = useDispatch();
+  const meetups = useSelector((state: RootState) => state.meetups);
   useEffect(() => {
     dispatch(fetchMeetups());
   }, []);
-  const meetups = useSelector((state: RootState) => state.meetups);
   let content;
   if (meetups.allMeetups?.length === 0) {
     content = <p>You dont have any meetups yet</p>;

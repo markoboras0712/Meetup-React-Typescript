@@ -16,6 +16,7 @@ export const MeetupList: React.FC<Props> = ({ meetups }) => (
         title={meetup.title}
         address={meetup.address}
         description={meetup.description}
+        isFavorite={meetup.isFavorite}
       />
     ))}
   </ul>

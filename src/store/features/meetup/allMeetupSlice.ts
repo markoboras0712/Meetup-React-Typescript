@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Meetup {
   id: string;
@@ -6,16 +6,19 @@ export interface Meetup {
   image: string;
   address: string;
   description: string;
+  isFavorite: boolean;
 }
 
 interface AllMeetups {
   allMeetups: Meetup[];
+  favoriteMeetups: [];
   loading: boolean;
   error: string | unknown;
 }
 
 const allMeetupsInitialState: AllMeetups = {
   allMeetups: [],
+  favoriteMeetups: [],
   loading: false,
   error: '',
 };
@@ -39,8 +42,8 @@ export const postMeetup = createAsyncThunk(
   'postMeetup',
   async (myData: Meetup) => {
     const {
-        id, title, image, address, description,
-    } = myData;
+        id, title, image, address, description, isFavorite,
+     } = myData;
     return fetch(
       'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
       {
@@ -52,6 +55,7 @@ export const postMeetup = createAsyncThunk(
           image,
           address,
           description,
+          isFavorite,
         }),
       },
     )
@@ -63,7 +67,9 @@ export const postMeetup = createAsyncThunk(
 export const allMeetupsSlices = createSlice({
   name: 'allMeetups',
   initialState: allMeetupsInitialState,
-  reducers: {},
+  reducers: {
+
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchMeetups.pending, (state) => {
       state.loading = true;

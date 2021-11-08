@@ -5,6 +5,7 @@ export interface Meetup {
   image: string;
   address: string;
   description: string;
+  isFavorite: boolean;
 }
 
 export class Meetup {
@@ -14,5 +15,6 @@ export class Meetup {
     this.image = Meetup.image;
     this.address = Meetup.address;
     this.description = Meetup.description;
+    this.isFavorite = Meetup.isFavorite;
   }
 }
