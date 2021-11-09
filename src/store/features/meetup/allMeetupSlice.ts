@@ -1,13 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-
-export interface Meetup {
-  id?: string;
-  title: string;
-  image: string;
-  address: string;
-  description: string;
-  isFavorite: boolean;
-}
+import { Meetup } from 'models/meetup';
 
 interface AllMeetups {
   allMeetups: Meetup[];
@@ -39,9 +31,7 @@ export const fetchMeetups = createAsyncThunk(
 export const postMeetup = createAsyncThunk(
   'postMeetup',
   async (myData: Meetup) => {
-    const {
-      id, title, image, address, description, isFavorite,
-     } = myData;
+    const { id, title, image, address, description, isFavorite } = myData;
     return fetch(
       'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
       {
@@ -55,18 +45,14 @@ export const postMeetup = createAsyncThunk(
           isFavorite,
         }),
       },
-    )
-      .then((res) => res.json())
-      .then((res) => res);
+    ).then((res) => res.json());
   },
 );
 
 export const editMeetup = createAsyncThunk(
   'editMeetup',
   async (myData: Meetup) => {
-    const {
-      id, title, image, address, description, isFavorite,
-     } = myData;
+    const { id, title, image, address, description, isFavorite } = myData;
     return fetch(
       `https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups/${id}.json`,
       {
@@ -133,7 +119,6 @@ export const allMeetupsSlices = createSlice({
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
-      console.log('Povratak od firebasea', action.payload);
       state.allMeetups[index] = action.payload;
       state.loading = false;
     });
@@ -144,4 +129,3 @@ export const allMeetupsSlices = createSlice({
   },
 });
 export const { addFavorite, removeFavorite } = allMeetupsSlices.actions;
-export default allMeetupsSlices.reducer;

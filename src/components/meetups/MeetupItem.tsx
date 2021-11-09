@@ -1,13 +1,7 @@
 import { Card } from 'components';
 import { Meetup } from 'models/meetup';
-import { useContext } from 'react';
-import {
-  addFavorite,
-  removeFavorite,
-} from 'store/features/meetup/allMeetupSlice';
+import { addFavorite, removeFavorite, RootState, editMeetup } from 'store';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'store/store';
-import { editMeetup, fetchMeetups } from 'store/features/meetup/allMeetupSlice';
 import classes from './MeetupItem.module.css';
 
 export const MeetupItem: React.FC<Meetup> = ({
@@ -27,8 +21,8 @@ export const MeetupItem: React.FC<Meetup> = ({
     description,
     isFavorite,
   };
-  const meetups = useSelector((state: RootState) => state.meetups);
-  const currentMeetup = meetups.allMeetups.find((meetup) => meetup.id === id);
+  const meetups = useSelector((state: RootState) => state.meetups.allMeetups);
+  const currentMeetup = meetups.find((meetup) => meetup.id === id);
   const toggleFavoriteHandler = () => {
     if (currentMeetup?.isFavorite) {
       dispatch(removeFavorite({ id }));

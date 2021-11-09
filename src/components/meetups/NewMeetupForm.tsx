@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Meetup } from 'models/meetup';
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { fetchMeetups, postMeetup } from 'store/features/meetup/allMeetupSlice';
+import { fetchMeetups, postMeetup } from 'store';
 import classes from './NewMeetupForm.module.css';
 
 export const NewMeetupForm: React.FC = () => {
@@ -21,10 +21,10 @@ export const NewMeetupForm: React.FC = () => {
     const enteredAddress = addressInputRef.current?.value;
     const enteredDescription = descriptionInputRef.current?.value;
     if (
-      enteredTitle?.trim().length === 0
-      || enteredImage?.trim().length === 0
-      || enteredAddress?.trim().length === 0
-      || enteredDescription?.trim().length === 0
+      enteredTitle?.trim().length === 0 ||
+      enteredImage?.trim().length === 0 ||
+      enteredAddress?.trim().length === 0 ||
+      enteredDescription?.trim().length === 0
     ) {
       return;
     }
@@ -36,7 +36,6 @@ export const NewMeetupForm: React.FC = () => {
       description: enteredDescription as string,
       isFavorite: false,
     };
-    console.log(meetupData);
     dispatch(postMeetup(meetupData));
     dispatch(fetchMeetups());
     history.replace('/');

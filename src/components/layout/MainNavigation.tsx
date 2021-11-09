@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-// eslint-disable-next-line import/no-unresolved
 import { Paths } from 'App';
 import classes from './MainNavigation.module.css';
 

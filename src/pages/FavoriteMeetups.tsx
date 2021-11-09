@@ -1,29 +1,27 @@
-import { useContext } from 'react';
-import { FavoritesContext } from 'store/FavoritesContext';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchMeetups } from 'store';
 import { MeetupList } from 'components';
-import { RootState } from 'store/store';
+import { RootState } from 'store';
 
 export const FavoriteMeetups: React.FC = () => {
   const dispatch = useDispatch();
-  const meetups = useSelector((state: RootState) => state.meetups);
-  const hasFavoriteMeetups = meetups.allMeetups.some(
-    (meetup) => meetup.isFavorite === true,
-  );
-  const favoriteMeetups = meetups.allMeetups.filter((meetup) => meetup.isFavorite === true);
-  console.log(favoriteMeetups);
-  const favoriteCtx = useContext(FavoritesContext);
+  useEffect(() => {
+    dispatch(fetchMeetups());
+  }, []);
+  const meetups = useSelector((state: RootState) => state.meetups.allMeetups);
+  const hasFavoriteMeetups = meetups.some((meetup) => meetup.isFavorite);
+  const favoriteMeetups = meetups.filter((meetup) => meetup.isFavorite);
   let content;
   if (!hasFavoriteMeetups) {
-    content = (
+    return (content = (
       <p>
-        You dont have any favorite meetups yet. Return to home page and add
-        some.
+        You dont have any favorite meetups yet. Return to home page and addsome.
       </p>
-    );
-  } else {
-    content = <MeetupList meetups={favoriteMeetups} />;
+    ));
   }
+  content = <MeetupList meetups={favoriteMeetups} />;
+
   return (
     <section>
       <h1>My Favorite Meetups</h1>

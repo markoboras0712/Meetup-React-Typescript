@@ -1,11 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import allMeetupReducer from './features/meetup/allMeetupSlice';
+import { allMeetupsSlices } from 'store/features/meetup/allMeetupSlice';
 
 export const store = configureStore({
-  reducer: { meetups: allMeetupReducer },
+  reducer: { meetups: allMeetupsSlices.reducer },
 });
 
 export const rootReducer = combineReducers({
-  meetups: allMeetupReducer,
+  meetups: allMeetupsSlices.reducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;
