@@ -1,7 +1,13 @@
 import { Card } from 'components';
 import { Meetup } from 'models/meetup';
 import { useContext } from 'react';
-import { FavoritesContext } from 'store/FavoritesContext';
+import {
+  addFavorite,
+  removeFavorite,
+} from 'store/features/meetup/allMeetupSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import { editMeetup, fetchMeetups } from 'store/features/meetup/allMeetupSlice';
 import classes from './MeetupItem.module.css';
 
 export const MeetupItem: React.FC<Meetup> = ({
@@ -12,20 +18,24 @@ export const MeetupItem: React.FC<Meetup> = ({
   description,
   isFavorite,
 }) => {
-  const favoriteCtx = useContext(FavoritesContext);
-  const itemIsFavorite = favoriteCtx.itemIsFavorite(id);
+  const dispatch = useDispatch();
+  const meetupData: Meetup = {
+    id,
+    title,
+    image,
+    address,
+    description,
+    isFavorite,
+  };
+  const meetups = useSelector((state: RootState) => state.meetups);
+  const currentMeetup = meetups.allMeetups.find((meetup) => meetup.id === id);
   const toggleFavoriteHandler = () => {
-    if (itemIsFavorite) {
-      favoriteCtx.removeFavorite(id);
+    if (currentMeetup?.isFavorite) {
+      dispatch(removeFavorite({ id }));
+      dispatch(editMeetup({ ...meetupData, isFavorite: !isFavorite }));
     } else {
-      favoriteCtx.addFavorite({
-        id,
-        title,
-        image,
-        address,
-        description,
-        isFavorite,
-      });
+      dispatch(addFavorite({ id }));
+      dispatch(editMeetup({ ...meetupData, isFavorite: !isFavorite }));
     }
   };
 
@@ -42,7 +52,9 @@ export const MeetupItem: React.FC<Meetup> = ({
         </div>
         <div className={classes.actions}>
           <button type="button" onClick={toggleFavoriteHandler}>
-            {itemIsFavorite ? 'Remove from Favorites' : 'To Favorites'}
+            {currentMeetup?.isFavorite
+              ? 'Remove from Favorites'
+              : 'To Favorites'}
           </button>
         </div>
       </Card>

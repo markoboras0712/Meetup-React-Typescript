@@ -30,7 +30,6 @@ export const NewMeetupForm: React.FC = () => {
     }
 
     const meetupData: Meetup = {
-      id: new Date().toISOString(),
       title: enteredTitle as string,
       image: enteredImage as string,
       address: enteredAddress as string,

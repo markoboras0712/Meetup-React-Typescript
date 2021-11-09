@@ -26,7 +26,7 @@ export const FavoritesContextProvider: React.FC = ({ children }) => {
     )
 };
 
-  const removeFavoriteHandler = (meetupId: string) => {
+  const removeFavoriteHandler = (meetupId: string | undefined) => {
     setUserFavorites((prevUserFavorites) =>
       prevUserFavorites.filter((meetup) => meetup.id !== meetupId),
     );

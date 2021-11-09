@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Meetup {
-  id: string;
+  id?: string;
   title: string;
   image: string;
   address: string;
@@ -11,14 +11,12 @@ export interface Meetup {
 
 interface AllMeetups {
   allMeetups: Meetup[];
-  favoriteMeetups: [];
   loading: boolean;
   error: string | unknown;
 }
 
 const allMeetupsInitialState: AllMeetups = {
   allMeetups: [],
-  favoriteMeetups: [],
   loading: false,
   error: '',
 };
@@ -42,7 +40,7 @@ export const postMeetup = createAsyncThunk(
   'postMeetup',
   async (myData: Meetup) => {
     const {
-        id, title, image, address, description, isFavorite,
+      id, title, image, address, description, isFavorite,
      } = myData;
     return fetch(
       'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
@@ -50,7 +48,31 @@ export const postMeetup = createAsyncThunk(
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id,
+          title,
+          image,
+          address,
+          description,
+          isFavorite,
+        }),
+      },
+    )
+      .then((res) => res.json())
+      .then((res) => res);
+  },
+);
+
+export const editMeetup = createAsyncThunk(
+  'editMeetup',
+  async (myData: Meetup) => {
+    const {
+      id, title, image, address, description, isFavorite,
+     } = myData;
+    return fetch(
+      `https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups/${id}.json`,
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           title,
           image,
           address,
@@ -68,7 +90,18 @@ export const allMeetupsSlices = createSlice({
   name: 'allMeetups',
   initialState: allMeetupsInitialState,
   reducers: {
-
+    addFavorite: (state, action) => {
+      const index = state.allMeetups.findIndex(
+        (meetup) => meetup.id === action.payload.id,
+      );
+      state.allMeetups[index].isFavorite = true;
+    },
+    removeFavorite: (state, action) => {
+      const index = state.allMeetups.findIndex(
+        (meetup) => meetup.id === action.payload.id,
+      );
+      state.allMeetups[index].isFavorite = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMeetups.pending, (state) => {
@@ -93,7 +126,22 @@ export const allMeetupsSlices = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addCase(editMeetup.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(editMeetup.fulfilled, (state, action) => {
+      const index = state.allMeetups.findIndex(
+        (meetup) => meetup.id === action.payload.id,
+      );
+      console.log('Povratak od firebasea', action.payload);
+      state.allMeetups[index] = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(editMeetup.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
-
+export const { addFavorite, removeFavorite } = allMeetupsSlices.actions;
 export default allMeetupsSlices.reducer;
