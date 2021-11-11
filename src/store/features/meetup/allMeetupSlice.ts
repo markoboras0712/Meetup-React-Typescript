@@ -13,62 +13,70 @@ const allMeetupsInitialState: AllMeetups = {
   error: '',
 };
 
-export const fetchMeetups = createAsyncThunk(
-  'getAllMeetups',
-  async (dispatch, getState) => {
+export const fetchMeetups = createAsyncThunk('getAllMeetups', async () => {
+  try {
     const response = await fetch(
       'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
     );
+    if (response.status !== 200) {
+      throw new Error('cannot fetch data');
+    }
     const allMeetups = await response.json();
     const meetups: Meetup[] = [];
     Object.keys(allMeetups).map((key) =>
       meetups.push({ ...allMeetups[key], id: key }),
     );
-    return meetups;
-  },
-);
+    return meetups as Meetup[];
+  } catch (error) {
+    throw new Error('didnt fetch data');
+  }
+});
 
 export const postMeetup = createAsyncThunk(
   'postMeetup',
   async (myData: Meetup) => {
-    const { id, title, image, address, description, isFavorite } = myData;
-    return fetch(
-      'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          image,
-          address,
-          description,
-          isFavorite,
-        }),
-      },
-    ).then((res) => res.json());
+    const settings = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(myData),
+    };
+    try {
+      const response = await fetch(
+        'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
+        settings,
+      );
+      if (!response.ok) {
+        throw new Error('Post failed');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return error;
+    }
   },
 );
 
 export const editMeetup = createAsyncThunk(
   'editMeetup',
   async (myData: Meetup) => {
-    const { id, title, image, address, description, isFavorite } = myData;
-    return fetch(
-      `https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups/${id}.json`,
-      {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          image,
-          address,
-          description,
-          isFavorite,
-        }),
-      },
-    )
-      .then((res) => res.json())
-      .then((res) => res);
+    const settings = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(myData),
+    };
+    try {
+      const response = await fetch(
+        `https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups/${myData.id}.json`,
+        settings,
+      );
+      if (!response.ok) {
+        throw new Error('Post failed');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return error;
+    }
   },
 );
 
