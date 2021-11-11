@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import { Card } from 'components';
 import { useDispatch } from 'react-redux';
 import { Meetup } from 'models/meetup';
@@ -22,18 +21,22 @@ export const NewMeetupForm: React.FC = () => {
     const enteredDescription = descriptionInputRef.current?.value;
     if (
       enteredTitle?.trim().length === 0 ||
+      enteredTitle === undefined ||
       enteredImage?.trim().length === 0 ||
+      enteredImage === undefined ||
       enteredAddress?.trim().length === 0 ||
-      enteredDescription?.trim().length === 0
+      enteredAddress === undefined ||
+      enteredDescription?.trim().length === 0 ||
+      enteredDescription === undefined
     ) {
       return;
     }
 
     const meetupData: Meetup = {
-      title: enteredTitle as string,
-      image: enteredImage as string,
-      address: enteredAddress as string,
-      description: enteredDescription as string,
+      title: enteredTitle,
+      image: enteredImage,
+      address: enteredAddress,
+      description: enteredDescription,
       isFavorite: false,
     };
     dispatch(postMeetup(meetupData));
