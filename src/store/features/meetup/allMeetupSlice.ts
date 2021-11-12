@@ -84,13 +84,13 @@ export const allMeetupsSlices = createSlice({
   name: 'allMeetups',
   initialState: allMeetupsInitialState,
   reducers: {
-    addFavorite: (state, action) => {
+    addFavorite: (state, action: PayloadAction<Meetup>) => {
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
       state.allMeetups[index].isFavorite = true;
     },
-    removeFavorite: (state, action) => {
+    removeFavorite: (state, action: PayloadAction<Meetup>) => {
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
@@ -101,10 +101,13 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(fetchMeetups.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchMeetups.fulfilled, (state, action) => {
-      state.allMeetups = action.payload;
-      state.loading = false;
-    });
+    builder.addCase(
+      fetchMeetups.fulfilled,
+      (state, action: PayloadAction<Meetup[]>) => {
+        state.allMeetups = action.payload;
+        state.loading = false;
+      },
+    );
     builder.addCase(fetchMeetups.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -112,10 +115,13 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(postMeetup.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(postMeetup.fulfilled, (state, action) => {
-      state.allMeetups.concat(action.payload);
-      state.loading = false;
-    });
+    builder.addCase(
+      postMeetup.fulfilled,
+      (state, action: PayloadAction<Meetup>) => {
+        state.allMeetups.concat(action.payload);
+        state.loading = false;
+      },
+    );
     builder.addCase(postMeetup.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -123,13 +129,16 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(editMeetup.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(editMeetup.fulfilled, (state, action) => {
-      const index = state.allMeetups.findIndex(
-        (meetup) => meetup.id === action.payload.id,
-      );
-      state.allMeetups[index] = action.payload;
-      state.loading = false;
-    });
+    builder.addCase(
+      editMeetup.fulfilled,
+      (state, action: PayloadAction<Meetup>) => {
+        const index = state.allMeetups.findIndex(
+          (meetup) => meetup.id === action.payload.id,
+        );
+        state.allMeetups[index] = action.payload;
+        state.loading = false;
+      },
+    );
     builder.addCase(editMeetup.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
