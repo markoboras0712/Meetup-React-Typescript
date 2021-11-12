@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Meetup } from 'models/meetup';
 import { db } from 'store';
 import { collection, getDocs, addDoc, setDoc, doc } from 'firebase/firestore';
@@ -66,13 +66,13 @@ export const allMeetupsSlices = createSlice({
   name: 'allMeetups',
   initialState: allMeetupsInitialState,
   reducers: {
-    addFavorite: (state, action) => {
+    addFavorite: (state, action: PayloadAction<Meetup>) => {
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
       state.allMeetups[index].isFavorite = true;
     },
-    removeFavorite: (state, action) => {
+    removeFavorite: (state, action: PayloadAction<Meetup>) => {
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
@@ -83,7 +83,7 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(fetchMeetups.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchMeetups.fulfilled, (state, action) => {
+    builder.addCase(fetchMeetups.fulfilled, (state, action: PayloadAction<Meetup[]>) => {
       state.allMeetups = action.payload;
       state.loading = false;
     });
@@ -94,7 +94,7 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(postMeetup.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(postMeetup.fulfilled, (state, action) => {
+    builder.addCase(postMeetup.fulfilled, (state) => {
       state.loading = false;
     });
     builder.addCase(postMeetup.rejected, (state, action) => {
@@ -104,7 +104,7 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(editMeetup.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(editMeetup.fulfilled, (state, action) => {
+    builder.addCase(editMeetup.fulfilled, (state) => {
       state.loading = false;
     });
     builder.addCase(editMeetup.rejected, (state, action) => {
