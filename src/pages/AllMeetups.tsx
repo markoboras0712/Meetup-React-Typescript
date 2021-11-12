@@ -18,7 +18,7 @@ export const AllMeetups: React.FC = () => {
 
   return (
     <section>
-      <h1>All Meetups</h1>
+      <h1>Meetups</h1>
       {content}
     </section>
   );
