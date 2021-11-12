@@ -32,14 +32,14 @@ export const NewMeetupForm: React.FC = () => {
       return;
     }
 
-    const meetupData: Meetup = {
+    const sendData = new Meetup({
       title: enteredTitle,
       image: enteredImage,
       address: enteredAddress,
       description: enteredDescription,
       isFavorite: false,
-    };
-    dispatch(postMeetup(meetupData));
+    });
+    dispatch(postMeetup(sendData));
     dispatch(fetchMeetups());
     history.replace('/');
   };

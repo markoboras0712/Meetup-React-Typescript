@@ -25,10 +25,10 @@ export const MeetupItem: React.FC<Meetup> = ({
   const currentMeetup = meetups.find((meetup) => meetup.id === id);
   const toggleFavoriteHandler = () => {
     if (currentMeetup?.isFavorite) {
-      dispatch(removeFavorite({ id }));
+      dispatch(removeFavorite(meetupData));
       dispatch(editMeetup({ ...meetupData, isFavorite: !isFavorite }));
     } else {
-      dispatch(addFavorite({ id }));
+      dispatch(addFavorite(meetupData));
       dispatch(editMeetup({ ...meetupData, isFavorite: !isFavorite }));
     }
   };
