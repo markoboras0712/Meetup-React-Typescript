@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { Link } from '@reach/router';
 import { Paths } from 'App';
 import classes from './MainNavigation.module.css';

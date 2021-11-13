@@ -30,9 +30,21 @@ const allMeetupsInitialState: AllMeetups = {
   error: '',
 };
 
-export const fetchMeetups = createAsyncThunk('getAllMeetups', async () => {
+enum ACTION {
+  GetMeetups = 'getAllMeetups',
+  GetMeetup = 'getMeetup',
+  PostMeetup = 'postMeetup',
+  EditMeetup = 'editMeetup',
+  AllMeetups = 'allMeetups',
+}
+
+enum FIRESTORE {
+  Meetups = 'meetups',
+}
+
+export const fetchMeetups = createAsyncThunk(ACTION.GetMeetups, async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, 'meetups'));
+    const querySnapshot = await getDocs(collection(db, FIRESTORE.Meetups));
     return querySnapshot.docs.map((res) => ({
       ...res.data(),
       id: res.id,
@@ -43,10 +55,10 @@ export const fetchMeetups = createAsyncThunk('getAllMeetups', async () => {
 });
 
 export const fetchMeetup = createAsyncThunk(
-  'getMeetup',
+  ACTION.GetMeetup,
   async (id: string) => {
     try {
-      const docSnap = await getDoc(doc(db, 'meetups', id));
+      const docSnap = await getDoc(doc(db, FIRESTORE.Meetups, id));
       console.log(docSnap.data());
       return docSnap.data() as Meetup;
     } catch (error) {
@@ -56,17 +68,16 @@ export const fetchMeetup = createAsyncThunk(
 );
 
 export const postMeetup = createAsyncThunk(
-  'postMeetup',
+  ACTION.PostMeetup,
   async (myData: Meetup) => {
     try {
-      const docRef = await addDoc(collection(db, 'meetups'), {
+      const docRef = await addDoc(collection(db, FIRESTORE.Meetups), {
         image: myData.image,
         description: myData.description,
         title: myData.title,
         address: myData.address,
         isFavorite: myData.isFavorite,
       });
-      console.log('Document written with ID: ', docRef.id);
     } catch (error) {
       throw new Error('didnt post data');
     }
@@ -74,10 +85,10 @@ export const postMeetup = createAsyncThunk(
 );
 
 export const editMeetup = createAsyncThunk(
-  'editMeetup',
+  ACTION.EditMeetup,
   async (myData: Meetup) => {
     try {
-      await setDoc(doc(db, 'meetups', myData.id as string), {
+      await setDoc(doc(db, FIRESTORE.Meetups, myData.id as string), {
         image: myData.image,
         description: myData.description,
         title: myData.title,
@@ -91,20 +102,14 @@ export const editMeetup = createAsyncThunk(
 );
 
 export const allMeetupsSlices = createSlice({
-  name: 'allMeetups',
+  name: ACTION.AllMeetups,
   initialState: allMeetupsInitialState,
   reducers: {
-    addFavorite: (state, action: PayloadAction<Meetup>) => {
+    toggleFavorite: (state, action: PayloadAction<Meetup>) => {
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
-      state.allMeetups[index].isFavorite = true;
-    },
-    removeFavorite: (state, action: PayloadAction<Meetup>) => {
-      const index = state.allMeetups.findIndex(
-        (meetup) => meetup.id === action.payload.id,
-      );
-      state.allMeetups[index].isFavorite = false;
+      state.allMeetups[index].isFavorite = !state.allMeetups[index].isFavorite;
     },
   },
   extraReducers: (builder) => {
@@ -158,4 +163,4 @@ export const allMeetupsSlices = createSlice({
     });
   },
 });
-export const { addFavorite, removeFavorite } = allMeetupsSlices.actions;
+export const { toggleFavorite } = allMeetupsSlices.actions;
