@@ -3,6 +3,10 @@ import { allMeetupsSlices } from 'store/features/meetup/allMeetupSlice';
 
 export const store = configureStore({
   reducer: { meetups: allMeetupsSlices.reducer },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const rootReducer = combineReducers({

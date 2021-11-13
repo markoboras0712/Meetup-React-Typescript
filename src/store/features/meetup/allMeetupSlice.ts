@@ -1,100 +1,115 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Meetup } from 'models/meetup';
+import { db } from 'store';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  setDoc,
+  doc,
+  getDoc,
+} from 'firebase/firestore';
 
 interface AllMeetups {
   allMeetups: Meetup[];
+  meetup: Meetup;
   loading: boolean;
   error: string | unknown;
 }
 
 const allMeetupsInitialState: AllMeetups = {
   allMeetups: [],
+  meetup: {
+    title: '',
+    image: '',
+    description: '',
+    address: '',
+    isFavorite: false,
+  },
   loading: false,
   error: '',
 };
 
-export const fetchMeetups = createAsyncThunk('getAllMeetups', async () => {
+enum ACTION {
+  GetMeetups = 'getAllMeetups',
+  GetMeetup = 'getMeetup',
+  PostMeetup = 'postMeetup',
+  EditMeetup = 'editMeetup',
+  AllMeetups = 'allMeetups',
+}
+
+enum FIRESTORE {
+  Meetups = 'meetups',
+}
+
+export const fetchMeetups = createAsyncThunk(ACTION.GetMeetups, async () => {
   try {
-    const response = await fetch(
-      'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
-    );
-    if (response.status !== 200) {
-      throw new Error('cannot fetch data');
-    }
-    const allMeetups = await response.json();
-    const meetups: Meetup[] = [];
-    Object.keys(allMeetups).map((key) =>
-      meetups.push({ ...allMeetups[key], id: key }),
-    );
-    return meetups as Meetup[];
+    const querySnapshot = await getDocs(collection(db, FIRESTORE.Meetups));
+    return querySnapshot.docs.map((res) => ({
+      ...res.data(),
+      id: res.id,
+    })) as Meetup[];
   } catch (error) {
     throw new Error('didnt fetch data');
   }
 });
 
-export const postMeetup = createAsyncThunk(
-  'postMeetup',
-  async (myData: Meetup) => {
-    const settings = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(myData),
-    };
+export const fetchMeetup = createAsyncThunk(
+  ACTION.GetMeetup,
+  async (id: string) => {
     try {
-      const response = await fetch(
-        'https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups.json',
-        settings,
-      );
-      if (!response.ok) {
-        throw new Error('Post failed');
-      }
-      const data = await response.json();
-      return data;
+      const docSnap = await getDoc(doc(db, FIRESTORE.Meetups, id));
+      console.log(docSnap.data());
+      return docSnap.data() as Meetup;
     } catch (error) {
-      return error;
+      throw new Error('didnt fetch data');
+    }
+  },
+);
+
+export const postMeetup = createAsyncThunk(
+  ACTION.PostMeetup,
+  async (myData: Meetup) => {
+    try {
+      const docRef = await addDoc(collection(db, FIRESTORE.Meetups), {
+        image: myData.image,
+        description: myData.description,
+        title: myData.title,
+        address: myData.address,
+        isFavorite: myData.isFavorite,
+      });
+    } catch (error) {
+      throw new Error('didnt post data');
     }
   },
 );
 
 export const editMeetup = createAsyncThunk(
-  'editMeetup',
+  ACTION.EditMeetup,
   async (myData: Meetup) => {
-    const settings = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(myData),
-    };
     try {
-      const response = await fetch(
-        `https://meetups-react-typescript-default-rtdb.firebaseio.com/meetups/${myData.id}.json`,
-        settings,
-      );
-      if (!response.ok) {
-        throw new Error('Post failed');
-      }
-      const data = await response.json();
-      return data;
+      await setDoc(doc(db, FIRESTORE.Meetups, myData.id as string), {
+        image: myData.image,
+        description: myData.description,
+        title: myData.title,
+        address: myData.address,
+        isFavorite: myData.isFavorite,
+      });
     } catch (error) {
-      return error;
+      throw new Error('didnt edit data');
     }
   },
 );
 
 export const allMeetupsSlices = createSlice({
-  name: 'allMeetups',
+  name: ACTION.AllMeetups,
   initialState: allMeetupsInitialState,
   reducers: {
-    addFavorite: (state, action: PayloadAction<Meetup>) => {
+    toggleFavorite: (state, action: PayloadAction<Meetup>) => {
       const index = state.allMeetups.findIndex(
         (meetup) => meetup.id === action.payload.id,
       );
-      state.allMeetups[index].isFavorite = true;
-    },
-    removeFavorite: (state, action: PayloadAction<Meetup>) => {
-      const index = state.allMeetups.findIndex(
-        (meetup) => meetup.id === action.payload.id,
-      );
-      state.allMeetups[index].isFavorite = false;
+      state.allMeetups[index].isFavorite = !state.allMeetups[index].isFavorite;
     },
   },
   extraReducers: (builder) => {
@@ -112,16 +127,26 @@ export const allMeetupsSlices = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
-    builder.addCase(postMeetup.pending, (state) => {
+    builder.addCase(fetchMeetup.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(
-      postMeetup.fulfilled,
+      fetchMeetup.fulfilled,
       (state, action: PayloadAction<Meetup>) => {
-        state.allMeetups.concat(action.payload);
+        state.meetup = action.payload;
         state.loading = false;
       },
     );
+    builder.addCase(fetchMeetup.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(postMeetup.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(postMeetup.fulfilled, (state) => {
+      state.loading = false;
+    });
     builder.addCase(postMeetup.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -129,20 +154,13 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(editMeetup.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(
-      editMeetup.fulfilled,
-      (state, action: PayloadAction<Meetup>) => {
-        const index = state.allMeetups.findIndex(
-          (meetup) => meetup.id === action.payload.id,
-        );
-        state.allMeetups[index] = action.payload;
-        state.loading = false;
-      },
-    );
+    builder.addCase(editMeetup.fulfilled, (state) => {
+      state.loading = false;
+    });
     builder.addCase(editMeetup.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
   },
 });
-export const { addFavorite, removeFavorite } = allMeetupsSlices.actions;
+export const { toggleFavorite } = allMeetupsSlices.actions;
