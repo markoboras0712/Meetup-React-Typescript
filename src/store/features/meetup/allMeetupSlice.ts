@@ -1,16 +1,31 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Meetup } from 'models/meetup';
 import { db } from 'store';
-import { collection, getDocs, addDoc, setDoc, doc } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  setDoc,
+  doc,
+  getDoc,
+} from 'firebase/firestore';
 
 interface AllMeetups {
   allMeetups: Meetup[];
+  meetup: Meetup;
   loading: boolean;
   error: string | unknown;
 }
 
 const allMeetupsInitialState: AllMeetups = {
   allMeetups: [],
+  meetup: {
+    title: '',
+    image: '',
+    description: '',
+    address: '',
+    isFavorite: false,
+  },
   loading: false,
   error: '',
 };
@@ -26,6 +41,19 @@ export const fetchMeetups = createAsyncThunk('getAllMeetups', async () => {
     throw new Error('didnt fetch data');
   }
 });
+
+export const fetchMeetup = createAsyncThunk(
+  'getMeetup',
+  async (id: string) => {
+    try {
+      const docSnap = await getDoc(doc(db, 'meetups', id));
+      console.log(docSnap.data());
+      return docSnap.data() as Meetup;
+    } catch (error) {
+      throw new Error('didnt fetch data');
+    }
+  },
+);
 
 export const postMeetup = createAsyncThunk(
   'postMeetup',
@@ -83,11 +111,28 @@ export const allMeetupsSlices = createSlice({
     builder.addCase(fetchMeetups.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(fetchMeetups.fulfilled, (state, action: PayloadAction<Meetup[]>) => {
-      state.allMeetups = action.payload;
-      state.loading = false;
-    });
+    builder.addCase(
+      fetchMeetups.fulfilled,
+      (state, action: PayloadAction<Meetup[]>) => {
+        state.allMeetups = action.payload;
+        state.loading = false;
+      },
+    );
     builder.addCase(fetchMeetups.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(fetchMeetup.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      fetchMeetup.fulfilled,
+      (state, action: PayloadAction<Meetup>) => {
+        state.meetup = action.payload;
+        state.loading = false;
+      },
+    );
+    builder.addCase(fetchMeetup.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });

@@ -1,5 +1,6 @@
 import { Card } from 'components';
 import { Meetup } from 'models/meetup';
+import { Link } from '@reach/router';
 import { addFavorite, removeFavorite, RootState, editMeetup } from 'store';
 import { useDispatch, useSelector } from 'react-redux';
 import classes from './MeetupItem.module.css';
@@ -36,9 +37,11 @@ export const MeetupItem: React.FC<Meetup> = ({
   return (
     <li className={classes.item}>
       <Card>
-        <div className={classes.image}>
-          <img src={image} alt={description} />
-        </div>
+        <Link to={`/meetups/${id}`}>
+          <div className={classes.image}>
+            <img src={image} alt={description} />
+          </div>
+        </Link>
         <div className={classes.content}>
           <h3>{title}</h3>
           <address>{address}</address>
