@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import allMeetupsReducer from '../modules/meetups/redux/allMeetupSlice';
+import allMeetupsReducer from './allMeetupSlice';
 
 export const store = configureStore({
   reducer: { meetups: allMeetupsReducer },

@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Meetup, AllMeetups } from 'models';
-import { ACTION, FIRESTORE } from 'modules/meetups';
-import { db } from 'store';
+import { ACTION, FIRESTORE, db } from 'modules/meetups';
 import {
   collection,
   getDocs,

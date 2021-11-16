@@ -3,5 +3,5 @@ export enum ACTION {
   GetMeetup = 'getMeetup',
   PostMeetup = 'postMeetup',
   EditMeetup = 'editMeetup',
-  Meetups = 'allMeetups',
+  Meetups = 'meetups',
 }
