@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { allMeetupsSlices } from 'store/features/meetup/allMeetupSlice';
+import allMeetupsReducer from './allMeetupSlice';
 
 export const store = configureStore({
-  reducer: { meetups: allMeetupsSlices.reducer },
+  reducer: { meetups: allMeetupsReducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
@@ -10,6 +10,6 @@ export const store = configureStore({
 });
 
 export const rootReducer = combineReducers({
-  meetups: allMeetupsSlices.reducer,
+  meetups: allMeetupsReducer,
 });
 export type RootState = ReturnType<typeof rootReducer>;

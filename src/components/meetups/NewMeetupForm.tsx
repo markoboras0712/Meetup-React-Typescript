@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Meetup } from 'models/meetup';
 import { useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { fetchMeetups, postMeetup } from 'store';
+import { fetchMeetups, postMeetup } from 'modules/meetups/redux';
 import classes from './NewMeetupForm.module.css';
 
 export const NewMeetupForm: React.FC = () => {

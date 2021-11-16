@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMeetups } from 'store';
+import { fetchMeetups } from 'modules/meetups/redux';
 import { MeetupList } from 'components';
-import { RootState } from 'store';
+import { RootState } from 'modules/meetups/redux';
 
 export const FavoriteMeetups: React.FC = () => {
   const dispatch = useDispatch();

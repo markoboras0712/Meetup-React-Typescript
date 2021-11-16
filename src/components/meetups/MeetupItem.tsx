@@ -1,7 +1,7 @@
 import { Card } from 'components';
 import { Meetup } from 'models/meetup';
 import { Link } from '@reach/router';
-import { toggleFavorite, RootState, editMeetup } from 'store';
+import { toggleFavorite, RootState, editMeetup } from 'modules/meetups/redux';
 import { useDispatch, useSelector } from 'react-redux';
 import classes from './MeetupItem.module.css';
 

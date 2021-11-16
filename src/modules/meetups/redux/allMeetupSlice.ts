@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Meetup, AllMeetups, ACTION, FIRESTORE } from 'models';
-import { db } from 'store';
+import { db } from 'modules/meetups/redux';
 import {
   collection,
   getDocs,
@@ -145,3 +145,4 @@ export const allMeetupsSlices = createSlice({
   },
 });
 export const { toggleFavorite } = allMeetupsSlices.actions;
+export default allMeetupsSlices.reducer;
