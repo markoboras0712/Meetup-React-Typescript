@@ -1,18 +1,10 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMeetups, RootState } from 'modules/meetups';
+import { useFavoriteMeetups } from 'modules/meetups/hooks';
 import { MeetupList } from 'components';
 
 export const FavoriteMeetups: React.FC = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchMeetups());
-  }, []);
-  const meetups = useSelector((state: RootState) => state.meetups.allMeetups);
-  const hasFavoriteMeetups = meetups.some((meetup) => meetup.isFavorite);
-  const favoriteMeetups = meetups.filter((meetup) => meetup.isFavorite);
+  const favoriteMeetups = useFavoriteMeetups();
   let content;
-  if (!hasFavoriteMeetups) {
+  if (favoriteMeetups.length === 0) {
     return (content = (
       <p>
         You dont have any favorite meetups yet. Return to home page and addsome.
