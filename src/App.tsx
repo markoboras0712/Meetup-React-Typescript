@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { Router, RouteComponentProps } from '@reach/router';
 import { Routes } from 'models';
-import { AllMeetups, FavoriteMeetups, MeetupPage, NotFound } from 'pages';
+import { AllMeetups, FavoriteMeetups, MeetupPage, NotFound } from 'views';
 import { NewMeetupForm } from 'components';
 import { Layout } from 'components';
 

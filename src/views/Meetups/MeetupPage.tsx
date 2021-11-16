@@ -3,7 +3,7 @@ import { MeetupItem } from 'components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchMeetup } from 'modules/meetups/redux';
-import { RootState } from 'modules/meetups/redux/store';
+import { RootState } from 'store/store';
 
 export const MeetupPage: React.FC<RouteComponentProps> = () => {
   const params = useParams();

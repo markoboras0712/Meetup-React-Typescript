@@ -2,7 +2,7 @@ import { MeetupList } from 'components';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMeetups } from 'modules/meetups/redux';
-import { RootState } from 'modules/meetups/redux/store';
+import { RootState } from 'store/store';
 
 export const AllMeetups: React.FC = () => {
   const dispatch = useDispatch();
