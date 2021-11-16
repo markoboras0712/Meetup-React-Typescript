@@ -18,3 +18,10 @@ export class Meetup {
     this.isFavorite = Meetup.isFavorite;
   }
 }
+
+export interface AllMeetups {
+  allMeetups: Meetup[];
+  meetup: Meetup;
+  loading: boolean;
+  error: string | unknown;
+}

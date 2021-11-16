@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Link } from '@reach/router';
-import { Paths } from 'App';
+import { Routes } from 'models';
 import classes from './MainNavigation.module.css';
 
 export const MainNavigation: React.FC = () => (
@@ -9,13 +9,13 @@ export const MainNavigation: React.FC = () => (
     <nav>
       <ul>
         <li>
-          <Link to={Paths.Home}>All Meetups</Link>
+          <Link to={Routes.Home}>All Meetups</Link>
         </li>
         <li>
-          <Link to={Paths.FavoritesPage}>Favorite Meetups</Link>
+          <Link to={Routes.FavoritesPage}>Favorite Meetups</Link>
         </li>
         <li>
-          <Link to={Paths.NewMeetupPage}>Create New Meetup</Link>
+          <Link to={Routes.NewMeetupPage}>Create New Meetup</Link>
         </li>
       </ul>
     </nav>

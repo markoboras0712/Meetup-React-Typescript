@@ -1,16 +1,9 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import { Router, RouteComponentProps } from '@reach/router';
+import { Routes } from 'models';
 import { AllMeetups, FavoriteMeetups, MeetupPage, NotFound } from 'pages';
 import { NewMeetupForm } from 'components';
 import { Layout } from 'components';
-
-export enum Paths {
-  Home = '/',
-  FavoritesPage = '/favorites',
-  NewMeetupPage = '/new-meetup',
-  MeetupPage = 'meetups/:id',
-  NotFoundPage = '*',
-}
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
@@ -19,17 +12,17 @@ const RouterPage = (
 export const App: React.FC = () => (
   <Layout>
     <Router>
-      <RouterPage path={Paths.Home} pageComponent={<AllMeetups />} />
+      <RouterPage path={Routes.Home} pageComponent={<AllMeetups />} />
       <RouterPage
-        path={Paths.FavoritesPage}
+        path={Routes.FavoritesPage}
         pageComponent={<FavoriteMeetups />}
       />
       <RouterPage
-        path={Paths.NewMeetupPage}
+        path={Routes.NewMeetupPage}
         pageComponent={<NewMeetupForm />}
       />
-      <RouterPage path={Paths.MeetupPage} pageComponent={<MeetupPage />} />
-      <RouterPage path={Paths.NotFoundPage} pageComponent={<NotFound />} />
+      <RouterPage path={Routes.MeetupPage} pageComponent={<MeetupPage />} />
+      <RouterPage path={Routes.NotFoundPage} pageComponent={<NotFound />} />
     </Router>
   </Layout>
 );

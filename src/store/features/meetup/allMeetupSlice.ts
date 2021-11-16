@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { Meetup } from 'models/meetup';
+import { Meetup, AllMeetups, ACTION, FIRESTORE } from 'models';
 import { db } from 'store';
 import {
   collection,
@@ -9,13 +9,6 @@ import {
   doc,
   getDoc,
 } from 'firebase/firestore';
-
-interface AllMeetups {
-  allMeetups: Meetup[];
-  meetup: Meetup;
-  loading: boolean;
-  error: string | unknown;
-}
 
 const allMeetupsInitialState: AllMeetups = {
   allMeetups: [],
@@ -29,18 +22,6 @@ const allMeetupsInitialState: AllMeetups = {
   loading: false,
   error: '',
 };
-
-enum ACTION {
-  GetMeetups = 'getAllMeetups',
-  GetMeetup = 'getMeetup',
-  PostMeetup = 'postMeetup',
-  EditMeetup = 'editMeetup',
-  AllMeetups = 'allMeetups',
-}
-
-enum FIRESTORE {
-  Meetups = 'meetups',
-}
 
 export const fetchMeetups = createAsyncThunk(ACTION.GetMeetups, async () => {
   try {
@@ -102,7 +83,7 @@ export const editMeetup = createAsyncThunk(
 );
 
 export const allMeetupsSlices = createSlice({
-  name: ACTION.AllMeetups,
+  name: ACTION.Meetups,
   initialState: allMeetupsInitialState,
   reducers: {
     toggleFavorite: (state, action: PayloadAction<Meetup>) => {
