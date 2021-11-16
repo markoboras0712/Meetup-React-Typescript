@@ -1,5 +1,4 @@
-import { useFavoriteMeetups } from 'modules/meetups/hooks';
-import { MeetupList } from 'components';
+import { useFavoriteMeetups, MeetupList } from 'modules/meetups';
 
 export const FavoriteMeetups: React.FC = () => {
   const favoriteMeetups = useFavoriteMeetups();

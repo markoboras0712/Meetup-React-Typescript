@@ -1,5 +1,4 @@
-import { RootState } from 'modules/meetups/redux/store';
-import { fetchMeetup } from 'modules/meetups';
+import { fetchMeetup, RootState } from 'modules/meetups';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from '@reach/router';

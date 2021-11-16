@@ -1,9 +1,5 @@
 import { RouteComponentProps, useParams } from '@reach/router';
-import { useMeetup } from 'modules/meetups/hooks';
-import { MeetupItem } from 'components';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { fetchMeetup, RootState } from 'modules/meetups';
+import { useMeetup, MeetupItem } from 'modules/meetups';
 
 export const MeetupPage: React.FC<RouteComponentProps> = () => {
   const { meetup, params } = useMeetup();

@@ -1,4 +1,4 @@
-import { MeetupItem } from 'components';
+import { MeetupItem } from 'modules/meetups';
 import { Meetup } from 'models/meetup';
 import classes from './MeetupList.module.css';
 

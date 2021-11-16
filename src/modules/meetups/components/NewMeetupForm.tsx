@@ -1,9 +1,10 @@
 import { Card } from 'components';
 import { useDispatch } from 'react-redux';
-import { Meetup } from 'models/meetup';
+import { Meetup, Routes } from 'models';
 import { useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { navigate } from '@reach/router';
 import { fetchMeetups, postMeetup } from 'modules/meetups/redux';
+import { checkData } from 'modules/meetups';
 import classes from './NewMeetupForm.module.css';
 
 export const NewMeetupForm: React.FC = () => {
@@ -12,36 +13,21 @@ export const NewMeetupForm: React.FC = () => {
   const imageInputRef = useRef<HTMLInputElement>(null);
   const addressInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
-  const history = useHistory();
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredTitle = titleInputRef.current?.value;
     const enteredImage = imageInputRef.current?.value;
     const enteredAddress = addressInputRef.current?.value;
     const enteredDescription = descriptionInputRef.current?.value;
-    if (
-      enteredTitle?.trim().length === 0 ||
-      enteredTitle === undefined ||
-      enteredImage?.trim().length === 0 ||
-      enteredImage === undefined ||
-      enteredAddress?.trim().length === 0 ||
-      enteredAddress === undefined ||
-      enteredDescription?.trim().length === 0 ||
-      enteredDescription === undefined
-    ) {
-      return;
-    }
 
-    const sendData = new Meetup({
-      title: enteredTitle,
-      image: enteredImage,
-      address: enteredAddress,
-      description: enteredDescription,
-      isFavorite: false,
-    });
-    dispatch(postMeetup(sendData));
-    dispatch(fetchMeetups());
-    history.replace('/');
+    const sendData = checkData(
+      enteredImage as string,
+      enteredDescription as string,
+      enteredAddress as string,
+      enteredTitle as string,
+    );
+    dispatch(postMeetup(sendData as Meetup));
+    navigate(Routes.Home);
   };
   return (
     <Card>

@@ -30,6 +30,7 @@
     "arrow-body-style": 0,
     "no-param-reassign": 0,
     "import/no-unresolved": 0,
+    "@typescript-eslintexplicit-module-boundary-types": 0,
     "no-return-assign": 0,
     "@typescript-eslint/no-empty-function": "off",
     "no-console": "off",

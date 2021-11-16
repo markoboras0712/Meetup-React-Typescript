@@ -1,5 +1,4 @@
-import { useMeetups } from 'modules/meetups/hooks';
-import { MeetupList } from 'components';
+import { useMeetups, MeetupList } from 'modules/meetups';
 
 export const AllMeetups: React.FC = () => {
   const meetups = useMeetups();

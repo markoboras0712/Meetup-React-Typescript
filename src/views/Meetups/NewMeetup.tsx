@@ -1,4 +1,4 @@
-import { NewMeetupForm } from 'components';
+import { NewMeetupForm } from 'modules/meetups';
 
 export const NewMeetup: React.FC = () => {
   return (
