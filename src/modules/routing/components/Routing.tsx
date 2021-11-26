@@ -17,9 +17,10 @@ export const Routing: React.FC = () => {
       />
       <RouterPage
         path={Routes.NewMeetupPage}
-        pageComponent={<NewMeetupForm />}
+        pageComponent={<NewMeetup />}
       />
       <RouterPage path={Routes.MeetupPage} pageComponent={<MeetupPage />} />
+      <RouterPage path={Routes.Login} pageComponent={<Login />} />
       <RouterPage path={Routes.NotFoundPage} pageComponent={<NotFound />} />
     </Router>
   );

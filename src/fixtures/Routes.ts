@@ -3,5 +3,6 @@ export enum Routes {
   FavoritesPage = '/favorites',
   NewMeetupPage = '/new-meetup',
   MeetupPage = 'meetups/:id',
+  Login = '/login',
   NotFoundPage = '*',
 }

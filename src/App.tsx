@@ -1,8 +1,11 @@
-import { Layout } from 'components';
-import { Routing } from 'modules/routing';
+import { Layout, MyRouter } from 'components';
+import { autoLogin } from 'modules/auth';
 
-export const App: React.FC = () => (
-  <Layout>
-    <Routing />
-  </Layout>
-);
+export const App: React.FC = () => {
+  autoLogin();
+  return (
+    <Layout>
+      <MyRouter />
+    </Layout>
+  );
+};
