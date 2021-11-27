@@ -4,6 +4,8 @@ import {
   PayloadAction,
   SerializedError,
 } from '@reduxjs/toolkit';
+import { navigate } from '@reach/router';
+import { Routes } from 'models';
 import { db, auth, provider } from 'modules/meetups';
 import {
   signInWithPopup,
@@ -70,6 +72,7 @@ export const signInWithGoogle = createAsyncThunk(
       querySnapshot.docs.map((document) =>
         console.log('User', document.data()),
       );
+      navigate(Routes.Home);
       return user;
     } catch (err) {
       console.log(err);
@@ -94,6 +97,7 @@ export const signUpWithEmailPassword = createAsyncThunk(
         email: user.email,
         refreshToken: user.refreshToken,
       });
+      navigate(Routes.Home);
       return user;
     } catch (error) {
       console.log(error);
@@ -111,6 +115,7 @@ export const signInWithEmailPassword = createAsyncThunk(
       );
       const { user } = response;
       console.log(user);
+      navigate(Routes.Home);
       return user;
     } catch (error) {
       console.log(error);
@@ -123,6 +128,7 @@ export const sendPasswordReset = createAsyncThunk(
   async (userData: SignUpInData) => {
     try {
       const response = await sendPasswordResetEmail(auth, userData.email);
+      navigate(Routes.Login);
       console.log('Response', response);
     } catch (error) {
       console.log(error);
@@ -133,6 +139,7 @@ export const sendPasswordReset = createAsyncThunk(
 export const logout = createAsyncThunk('logout', async (_, thunkAPI) => {
   try {
     await signOut(auth);
+    navigate(Routes.Login);
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: 'Didnt logout' });
   }
