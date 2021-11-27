@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { signInWithPopup } from 'firebase/auth';
-import { db, auth, provider } from 'modules/meetups';
+import { navigate } from '@reach/router';
+import { Routes } from 'models';
 import { useDispatch } from 'react-redux';
 import { Card } from 'components';
 import {
