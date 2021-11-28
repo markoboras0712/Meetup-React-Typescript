@@ -2,7 +2,6 @@
 import { Router, RouteComponentProps } from '@reach/router';
 import { Routes } from 'models';
 import { AllMeetups, FavoriteMeetups, MeetupPage, NotFound, NewMeetup, Login } from 'views';
-import React, { Fragment } from 'react';
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,

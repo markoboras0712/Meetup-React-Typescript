@@ -1,11 +1,10 @@
 import {
   createSlice,
   createAsyncThunk,
-  PayloadAction,
   SerializedError,
 } from '@reduxjs/toolkit';
 import { navigate } from '@reach/router';
-import { Routes } from 'models';
+import { Routes, UserData } from 'models';
 import { db, auth, provider } from 'modules/meetups';
 import {
   signInWithPopup,
@@ -14,26 +13,7 @@ import {
   sendPasswordResetEmail,
   signOut,
 } from '@firebase/auth';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  addDoc,
-  setDoc,
-  doc,
-  getDoc,
-} from 'firebase/firestore';
-
-export interface UserData {
-  id?: string | undefined | null;
-  displayName: string | null | undefined;
-  email: string | null | undefined;
-  authenticated?: boolean;
-  refreshToken?: string | null;
-  error?: SerializedError;
-  userPhoto?: string | null | undefined;
-}
+import { collection, getDocs, query, where, addDoc } from 'firebase/firestore';
 
 export interface SignUpInData {
   email: string;
@@ -46,13 +26,14 @@ const initialState: UserData = {
   email: null,
   authenticated: false,
   refreshToken: undefined,
-  error: undefined,
   userPhoto: null,
+  loading: false,
+  error: undefined,
 };
 
 export const signInWithGoogle = createAsyncThunk(
   'signInWithGoogle',
-  async (_, thunkAPI) => {
+  async () => {
     try {
       const res = await signInWithPopup(auth, provider);
       const { user } = res;
@@ -69,13 +50,10 @@ export const signInWithGoogle = createAsyncThunk(
           userPhoto: user.photoURL,
         });
       }
-      querySnapshot.docs.map((document) =>
-        console.log('User', document.data()),
-      );
       navigate(Routes.Home);
       return user;
     } catch (err) {
-      console.log(err);
+      throw new Error('Didnt sign in');
     }
   },
 );
@@ -100,7 +78,7 @@ export const signUpWithEmailPassword = createAsyncThunk(
       navigate(Routes.Home);
       return user;
     } catch (error) {
-      console.log(error);
+      throw new Error('Didng signup');
     }
   },
 );
@@ -118,20 +96,19 @@ export const signInWithEmailPassword = createAsyncThunk(
       navigate(Routes.Home);
       return user;
     } catch (error) {
-      console.log(error);
+      throw new Error('Didnt sign in');
     }
   },
 );
 
 export const sendPasswordReset = createAsyncThunk(
   'sendPasswordReset',
-  async (userData: SignUpInData) => {
+  async (userData: SignUpInData, thunkAPI) => {
     try {
       const response = await sendPasswordResetEmail(auth, userData.email);
       navigate(Routes.Login);
-      console.log('Response', response);
     } catch (error) {
-      console.log(error);
+      throw new Error('didnt send password reset');
     }
   },
 );
@@ -141,7 +118,7 @@ export const logout = createAsyncThunk('logout', async (_, thunkAPI) => {
     await signOut(auth);
     navigate(Routes.Login);
   } catch (error) {
-    return thunkAPI.rejectWithValue({ error: 'Didnt logout' });
+    throw new Error('didnt logout');
   }
 });
 
@@ -167,6 +144,9 @@ export const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(signInWithGoogle.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(signInWithGoogle.fulfilled, (state, action) => {
       state.displayName = action.payload?.displayName;
       state.email = action.payload?.email;
@@ -174,9 +154,13 @@ export const userSlice = createSlice({
       state.authenticated = true;
       state.id = action.payload?.uid;
       state.refreshToken = action.payload?.refreshToken;
+      state.loading = false;
     });
     builder.addCase(signInWithGoogle.rejected, (state, action) => {
       state.error = action.error;
+    });
+    builder.addCase(signUpWithEmailPassword.pending, (state, action) => {
+      state.loading = true;
     });
     builder.addCase(signUpWithEmailPassword.fulfilled, (state, action) => {
       state.displayName = action.payload?.email;
@@ -184,9 +168,13 @@ export const userSlice = createSlice({
       state.authenticated = true;
       state.id = action.payload?.uid;
       state.refreshToken = action.payload?.refreshToken;
+      state.loading = false;
     });
     builder.addCase(signUpWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
+    });
+    builder.addCase(signInWithEmailPassword.pending, (state, action) => {
+      state.loading = true;
     });
     builder.addCase(signInWithEmailPassword.fulfilled, (state, action) => {
       state.displayName = action.payload?.email;
@@ -194,15 +182,23 @@ export const userSlice = createSlice({
       state.authenticated = true;
       state.id = action.payload?.uid;
       state.refreshToken = action.payload?.refreshToken;
+      state.loading = false;
     });
     builder.addCase(signInWithEmailPassword.rejected, (state, action) => {
       state.error = action.error;
     });
+    builder.addCase(sendPasswordReset.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(sendPasswordReset.fulfilled, (state, action) => {
       state.authenticated = false;
+      state.loading = false;
     });
     builder.addCase(sendPasswordReset.rejected, (state, action) => {
       state.error = action.error;
+    });
+    builder.addCase(logout.pending, (state, action) => {
+      state.loading = true;
     });
     builder.addCase(logout.fulfilled, (state, action) => {
       state.displayName = null;
@@ -211,6 +207,7 @@ export const userSlice = createSlice({
       state.id = null;
       state.refreshToken = null;
       state.userPhoto = null;
+      state.loading = false;
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.error = action.error;

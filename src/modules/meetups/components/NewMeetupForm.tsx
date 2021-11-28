@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Meetup, Routes } from 'models';
 import { useRef } from 'react';
 import { navigate } from '@reach/router';
-import { fetchMeetups, postMeetup } from 'modules/meetups/redux';
+import { postMeetup } from 'modules/meetups/redux';
 import { checkData } from 'modules/meetups';
 import classes from './NewMeetupForm.module.css';
 

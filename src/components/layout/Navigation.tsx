@@ -1,13 +1,7 @@
 import { Link } from '@reach/router';
 import { Routes } from 'models';
-import { logout, useLogout } from 'modules/auth';
-import { auth, RootState } from 'modules/meetups';
-import { useDispatch, useSelector } from 'react-redux';
 
 export const Navigation: React.FC = () => {
-  const authenticated = useSelector(
-    (state: RootState) => state.user.authenticated,
-  );
   return (
     <nav>
       <ul>
