@@ -1,7 +1,7 @@
 import { Link } from '@reach/router';
 import { Routes } from 'models';
 import { logout, useLogout } from 'modules/auth';
-import { RootState } from 'modules/meetups';
+import { auth, RootState } from 'modules/meetups';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const Navigation: React.FC = () => {
@@ -20,11 +20,6 @@ export const Navigation: React.FC = () => {
         <li>
           <Link to={Routes.NewMeetupPage}>Create New Meetup</Link>
         </li>
-        {authenticated ? (
-          <Link to={Routes.Login}>Logout</Link>
-        ) : (
-          <Link to={Routes.Login}>Login</Link>
-        )}
       </ul>
     </nav>
   );

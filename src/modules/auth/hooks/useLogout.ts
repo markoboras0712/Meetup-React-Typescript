@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export const useLogout = () => {
   const dispatch = useDispatch();
-
-  dispatch(logout());
+  useEffect(() => {
+    dispatch(logout());
+  }, [dispatch]);
 };

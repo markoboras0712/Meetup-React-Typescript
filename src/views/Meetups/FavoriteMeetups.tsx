@@ -1,4 +1,5 @@
 import { useFavoriteMeetups, MeetupList } from 'modules/meetups';
+import { PrivateAuthGuard } from 'modules/auth';
 
 export const FavoriteMeetups: React.FC = () => {
   const favoriteMeetups = useFavoriteMeetups();
@@ -13,9 +14,11 @@ export const FavoriteMeetups: React.FC = () => {
   content = <MeetupList meetups={favoriteMeetups} />;
 
   return (
-    <section>
-      <h1>My Favorite Meetups</h1>
-      {content}
-    </section>
+    <PrivateAuthGuard>
+      <section>
+        <h1>My Favorite Meetups</h1>
+        {content}
+      </section>
+    </PrivateAuthGuard>
   );
 };
