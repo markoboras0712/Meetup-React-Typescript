@@ -1,3 +1,3 @@
 export enum FIRESTORE {
-  Users = 'users',
+  User = 'user',
 }

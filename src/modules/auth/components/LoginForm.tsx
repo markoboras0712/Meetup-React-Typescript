@@ -1,7 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { navigate } from '@reach/router';
-import { Routes } from 'models';
 import { useDispatch } from 'react-redux';
 import { Card } from 'components';
 import {
@@ -10,9 +8,7 @@ import {
   SignUpInData,
   signUpWithEmailPassword,
   sendPasswordReset,
-  logout,
   autoLogin,
-  clearUser,
 } from 'modules/auth';
 import React, { useRef } from 'react';
 import classes from './LoginForm.module.css';

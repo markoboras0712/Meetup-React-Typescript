@@ -1,9 +1,8 @@
-import { fetchMeetups, RootState } from 'modules/meetups';
-import { auth, provider } from 'modules/meetups';
-import { clearUser, logout, saveUser, UserData } from 'modules/auth';
+import { auth } from 'modules/meetups';
+import { UserData } from 'models';
+import { clearUser, logout, saveUser } from 'modules/auth';
 import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 export const autoLogin = () => {
   const dispatch = useDispatch();
