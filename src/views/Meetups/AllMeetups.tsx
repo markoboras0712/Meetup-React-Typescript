@@ -1,6 +1,9 @@
-import { useMeetups, MeetupList } from 'modules/meetups';
+/* eslint-disable react/jsx-one-expression-per-line */
+import { useMeetups, MeetupList, RootState } from 'modules/meetups';
 import { useEffect } from 'react';
-import { autoLogin } from 'modules/auth';
+import { autoLogin, clearUser, logout } from 'modules/auth';
+import { PrivateAuthGuard } from 'modules/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const AllMeetups: React.FC = () => {
   const meetups = useMeetups();

@@ -12,6 +12,7 @@ import {
   sendPasswordReset,
   logout,
   autoLogin,
+  clearUser,
 } from 'modules/auth';
 import React, { useRef } from 'react';
 import classes from './LoginForm.module.css';
@@ -62,10 +63,6 @@ export const LoginForm: React.FC = () => {
     dispatch(sendPasswordReset(passwordReset));
   };
 
-  const signOutHandler = (event: React.FormEvent) => {
-    event.preventDefault();
-    dispatch(logout());
-  };
   return (
     <Card>
       <form className={classes.form}>
@@ -99,9 +96,6 @@ export const LoginForm: React.FC = () => {
           </button>
           <button type="submit" onClick={passwordResetHandler}>
             Forgot Password
-          </button>
-          <button type="submit" onClick={signOutHandler}>
-            Logout
           </button>
         </div>
       </form>

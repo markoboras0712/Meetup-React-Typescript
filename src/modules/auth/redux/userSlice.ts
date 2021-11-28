@@ -32,7 +32,7 @@ export interface UserData {
   authenticated?: boolean;
   refreshToken?: string | null;
   error?: SerializedError;
-  userPhoto?: string | null;
+  userPhoto?: string | null | undefined;
 }
 
 export interface SignUpInData {
@@ -157,6 +157,14 @@ export const userSlice = createSlice({
       state.id = action.payload?.id;
       state.refreshToken = action.payload?.refreshToken;
     },
+    clearUser: (state) => {
+      state.displayName = null;
+      state.email = null;
+      state.userPhoto = null;
+      state.authenticated = false;
+      state.id = null;
+      state.refreshToken = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(signInWithGoogle.fulfilled, (state, action) => {
@@ -209,5 +217,5 @@ export const userSlice = createSlice({
     });
   },
 });
-export const { saveUser } = userSlice.actions;
+export const { saveUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

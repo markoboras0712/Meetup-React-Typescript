@@ -11,7 +11,7 @@ export const PublicAuthGuard: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate(Routes.MeetupPage);
+      navigate(Routes.Home);
     }
   }, [isAuthenticated]);
 
