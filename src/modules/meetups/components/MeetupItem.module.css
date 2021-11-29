@@ -2,7 +2,7 @@
     margin: 1rem 0;
   }
   
-  .image {
+  .item__imgblock {
     width: 100%;
     height: 20rem;
     overflow: hidden;
@@ -10,27 +10,27 @@
     border-top-left-radius: 6px;
   }
   
-  .image img {
+  .item__img {
     width: 100%;
     object-fit: cover;
   }
   
-  .content {
+  .item__content {
     text-align: center;
     padding: 1rem;
   }
   
-  .content h3 {
+  .item__h3content {
     font-size: 1.25rem;
     color: #2c292b;
   }
   
-  .actions {
+  .item__actions {
     padding: 1.5rem;
     text-align: center;
   }
   
-  .actions button {
+  .item__button {
     font: inherit;
     cursor: pointer;
     color: #77002e;
@@ -40,7 +40,7 @@
     border-radius: 4px;
   }
   
-  .actions button:hover,
-  .actions button:active {
+  .item__button:hover,
+  .item__button:active {
     background-color: #ffe2ed;
   }

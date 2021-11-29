@@ -33,17 +33,21 @@ export const MeetupItem: React.FC<Meetup> = ({
     <li className={classes.item}>
       <Card>
         <Link to={`/meetups/${id}`}>
-          <div className={classes.image}>
-            <img src={image} alt={description} />
+          <div className={classes.item__imgblock}>
+            <img
+              src={image}
+              alt={description}
+              className={classes.item__img}
+            />
           </div>
         </Link>
-        <div className={classes.content}>
-          <h3>{title}</h3>
+        <div className={classes.item__content}>
+          <h3 className={classes.item__h3content}>{title}</h3>
           <address>{address}</address>
           <p>{description}</p>
         </div>
-        <div className={classes.actions}>
-          <button type="button" onClick={toggleFavoriteHandler}>
+        <div className={classes.item__actions}>
+          <button type="button" onClick={toggleFavoriteHandler} className={classes.item__button}>
             {currentMeetup?.isFavorite
               ? 'Remove from Favorites'
               : 'To Favorites'}

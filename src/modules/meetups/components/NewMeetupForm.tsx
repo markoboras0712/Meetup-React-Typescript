@@ -32,29 +32,58 @@ export const NewMeetupForm: React.FC = () => {
   return (
     <Card>
       <form className={classes.form} onSubmit={submitHandler}>
-        <div className={classes.control}>
-          <label htmlFor="title">Meetup Title</label>
-          <input type="text" required id="title" ref={titleInputRef} />
+        <div className={classes.form__control}>
+          <label htmlFor="title" className={classes.form__label}>
+            Meetup Title
+          </label>
+          <input
+            type="text"
+            required
+            id="title"
+            ref={titleInputRef}
+            className={classes.form__input}
+          />
         </div>
-        <div className={classes.control}>
-          <label htmlFor="image">Meetup Image</label>
-          <input type="url" required id="image" ref={imageInputRef} />
+        <div className={classes.form__control}>
+          <label htmlFor="image" className={classes.form__label}>
+            Meetup Image
+          </label>
+          <input
+            type="url"
+            required
+            id="image"
+            ref={imageInputRef}
+            className={classes.form__input}
+          />
         </div>
-        <div className={classes.control}>
-          <label htmlFor="address">Meetup Address</label>
-          <input type="text" required id="address" ref={addressInputRef} />
+        <div className={classes.form__control}>
+          <label htmlFor="address" className={classes.form__label}>
+            Meetup Address
+          </label>
+          <input
+            type="text"
+            required
+            id="address"
+            ref={addressInputRef}
+            className={classes.form__input}
+          />
         </div>
-        <div className={classes.control}>
-          <label htmlFor="description">Meetup Description</label>
+        <div className={classes.form__control}>
+          <label htmlFor="description" className={classes.form__label}>
+            Meetup Description
+          </label>
           <textarea
             id="description"
             required
             rows={5}
             ref={descriptionInputRef}
+            className={classes.form__textarea}
           />
         </div>
-        <div className={classes.actions}>
-          <button type="submit">Add Meetup</button>
+        <div className={classes.form__actions}>
+          <button type="submit" className={classes.form__button}>
+            Add Meetup
+          </button>
         </div>
       </form>
     </Card>

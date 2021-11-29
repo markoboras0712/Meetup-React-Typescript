@@ -2,18 +2,18 @@
     padding: 1rem;
   }
   
-  .control {
+  .form__control {
     margin-bottom: 0.5rem;
   }
   
-  .control label {
+  .form__label {
     display: block;
     font-weight: bold;
     margin-bottom: 0.5rem;
   }
   
-  .control input,
-  .control textarea {
+  .form__input,
+  .form__textarea {
     display: block;
     font: inherit;
     border-radius: 4px;
@@ -22,12 +22,12 @@
     width: 100%;
   }
   
-  .actions {
+  .form__actions {
     margin-top: 1rem;
     text-align: right;
   }
   
-  .actions button {
+  .form__button {
     font: inherit;
     cursor: pointer;
     background-color: #77002e;
@@ -38,8 +38,8 @@
     font-weight: bold;
   }
   
-  .actions button:hover,
-  .actions button:active {
+  .form__button:hover,
+  .form__button:active {
     background-color: #a50e48;
     border-color: #a50e48;
   }
