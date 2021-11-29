@@ -1,5 +1,5 @@
 import { Link } from '@reach/router';
-import { Routes } from 'models';
+import { Routes } from 'fixtures';
 import classes from './MainNavigation.module.css';
 
 export const Navigation: React.FC = () => (

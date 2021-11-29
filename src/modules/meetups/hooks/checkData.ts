@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-return */
 import { Meetup } from 'models';
 
 export const checkData = (

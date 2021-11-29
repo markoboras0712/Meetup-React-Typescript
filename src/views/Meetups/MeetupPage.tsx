@@ -1,4 +1,4 @@
-import { RouteComponentProps, useParams } from '@reach/router';
+import { RouteComponentProps } from '@reach/router';
 import { useMeetup, MeetupItem } from 'modules/meetups';
 
 export const MeetupPage: React.FC<RouteComponentProps> = () => {

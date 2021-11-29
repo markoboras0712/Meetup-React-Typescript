@@ -1,7 +1,8 @@
-import { Layout, MyRouter } from 'components';
+import { Layout } from 'components';
+import { Routing } from 'modules/routing';
 
 export const App: React.FC = () => (
   <Layout>
-    <MyRouter />
+    <Routing />
   </Layout>
 );

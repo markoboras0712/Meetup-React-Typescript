@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-shadow */
 export interface Meetup {
   id?: string;
   title: string;
@@ -9,13 +8,13 @@ export interface Meetup {
 }
 
 export class Meetup {
-  constructor(Meetup: Meetup) {
-    this.id = Meetup.id;
-    this.title = Meetup.title;
-    this.image = Meetup.image;
-    this.address = Meetup.address;
-    this.description = Meetup.description;
-    this.isFavorite = Meetup.isFavorite;
+  constructor({ id, title, image, address, description, isFavorite }: Meetup) {
+    this.id = id;
+    this.title = title;
+    this.image = image;
+    this.address = address;
+    this.description = description;
+    this.isFavorite = isFavorite;
   }
 }
 
