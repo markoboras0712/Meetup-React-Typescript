@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { RootState } from 'modules/meetups';
-import { UserData } from 'models';
+import { UserData } from 'models/user';
 
 export const userSelector: (state: RootState) => UserData = (
   state: RootState,

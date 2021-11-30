@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes } from 'models';
+import { Routes } from 'fixtures';
 import { RootState } from 'modules/meetups';
 import { navigate } from '@reach/router';
 import { useSelector } from 'react-redux';

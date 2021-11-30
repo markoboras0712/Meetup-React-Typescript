@@ -4,7 +4,8 @@ import {
   SerializedError,
 } from '@reduxjs/toolkit';
 import { navigate } from '@reach/router';
-import { Routes, UserData } from 'models';
+import { UserData } from 'models/user';
+import { Routes } from 'fixtures';
 import { db, auth, provider } from 'modules/meetups';
 import {
   signInWithPopup,

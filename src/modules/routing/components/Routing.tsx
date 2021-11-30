@@ -1,7 +1,13 @@
 import { Router, RouteComponentProps } from '@reach/router';
 import { Routes } from 'fixtures';
-import { AllMeetups, FavoriteMeetups, MeetupPage, NotFound } from 'views';
-import { NewMeetupForm } from 'modules/meetups';
+import {
+  AllMeetups,
+  FavoriteMeetups,
+  MeetupPage,
+  NotFound,
+  NewMeetup,
+  Login,
+} from 'views';
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps,
@@ -15,10 +21,7 @@ export const Routing: React.FC = () => {
         path={Routes.FavoritesPage}
         pageComponent={<FavoriteMeetups />}
       />
-      <RouterPage
-        path={Routes.NewMeetupPage}
-        pageComponent={<NewMeetup />}
-      />
+      <RouterPage path={Routes.NewMeetupPage} pageComponent={<NewMeetup />} />
       <RouterPage path={Routes.MeetupPage} pageComponent={<MeetupPage />} />
       <RouterPage path={Routes.Login} pageComponent={<Login />} />
       <RouterPage path={Routes.NotFoundPage} pageComponent={<NotFound />} />

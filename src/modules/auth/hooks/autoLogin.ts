@@ -1,5 +1,5 @@
 import { auth } from 'modules/meetups';
-import { UserData } from 'models';
+import { UserData } from 'models/user';
 import { clearUser, logout, saveUser } from 'modules/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
